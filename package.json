@@ -1,0 +1,17 @@
+{
+  "name": "tsdata-structures-and-algorithms",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node first.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.8.3",
+    "@types/node": "^22.14.0"
+  }
+}
