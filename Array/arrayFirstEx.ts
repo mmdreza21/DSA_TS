@@ -8,7 +8,10 @@ class CArray<T> {
   }
 
   public insert(item: T): void {
-    if (this.size) this.arr.push(item);
+    if (this.size === this.arr.length) {
+      throw new Error("the array is full");
+    }
+    this.arr.push(item);
   }
 
   public removeAt(index: number): void {
