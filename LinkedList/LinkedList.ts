@@ -1,30 +1,32 @@
 class ListNode {
   public value: number;
-  public next: ListNode | undefined;
+  public next: ListNode | null = null;
 
-  constructor(value: number, next?: ListNode) {
-    this.next = next;
+  constructor(value: number) {
     this.value = value;
   }
 }
 
 class LinkedList {
-  private first: ListNode | undefined = undefined;
-  private last: ListNode | undefined;
+  private first: ListNode | null = null;
+  private last: ListNode | null = null;
+  private size: number = 0;
 
   private get isEmpty(): boolean {
     return !this.first || !this.last;
   }
-
   /**
    * addLast
    * @param value
    */
   public addLast(value: number) {
     const node = new ListNode(value);
-    if (this.isEmpty) this.first = node;
-    if (this.last) this.last.next = node;
-    this.last = node;
+    if (this.isEmpty) this.last = this.first = node;
+    else {
+      this.last!.next = node;
+      this.last = node;
+    }
+    this.size++;
   }
 
   /**
@@ -33,28 +35,41 @@ class LinkedList {
    */
   public addFirst(value: number) {
     const node = new ListNode(value);
-    if (this.isEmpty) {
-      this.last = node;
+    if (this.isEmpty) this.last = this.first = node;
+    else {
+      node.next = this.first;
       this.first = node;
-      return;
     }
-    node.next = this.first;
-    this.first = node;
+    this.size++;
   }
 
   /**
    * deleteFirst: delete the first item in the linkedList
    */
-  public deleteFirst() {
+  public deleteFirst(): void | null {
     if (this.isEmpty) throw new Error("linkedList is empty!");
-    if (!this.first!.next) {
-      this.first = undefined;
-      this.last = undefined;
-      return;
+    if (this.first === this.last) this.first = this.last = null;
+    else {
+      const second = this.first!.next;
+      this.first!.next = null;
+      this.first = second;
     }
-    const first = structuredClone(this.first);
-    this.first!.next = undefined;
-    this.first = first?.next;
+    this.size--;
+  }
+
+  /**
+   *  delete the last item in the linkedList
+   */
+  public deleteLast() {
+    if (this.isEmpty) throw new Error("linkedList is empty!");
+
+    if (this.first === this.last) this.first = this.last = null;
+    else {
+      const prev = this.getPrevious(this.last!);
+      this.last = prev;
+      prev!.next = null;
+    }
+    this.size--;
   }
 
   /**
@@ -63,54 +78,78 @@ class LinkedList {
    */
   public indexOf(value: number): number {
     if (this.isEmpty) throw new Error("linkedList is empty!");
-    let listVal = this.first?.value;
     let node = this.first;
     let counter = 0;
-    while (listVal !== value && node?.next) {
+    while (node) {
+      if (node.value === value) return counter;
       node = node?.next;
-      listVal = node?.value;
-
       counter++;
     }
 
-    return listVal !== value ? -1 : counter;
+    return -1;
   }
 
-  private getPrevious() {
-    let node = this.first;
-    while (node?.next?.next) {
-      node = node?.next;
-      console.log("mmd");
+  private getPrevious(node: ListNode) {
+    let current = this.first;
+    if (current === node) return null;
+    while (current?.next) {
+      if (current.next === node) return current;
+      current = current.next;
     }
+    return null;
   }
 
   /**
-   *  delete the last item in the linkedList
-   */
-  public deleteLast() {
-    if (this.isEmpty) throw new Error("linkedList is empty!");
-    let last = structuredClone(this.last);
-    let node = this.first;
-
-    while (node?.next?.next) {
-      node = node?.next;
-      console.log("mmd");
-    }
-    this.last = node;
-    node!.next = undefined;
+ * contain
+  @param value:number
+*/
+  public contain(value: number): boolean {
+    return this.indexOf(value) !== -1;
   }
 
-  //contain
+  get length() {
+    return this.size;
+  }
+
+  /**
+   * convertToArray
+   */
+  public toArray() {
+    let current = this.first;
+    const arr = new Array();
+    let index = 0;
+    while (current !== null) {
+      arr[index++] = current.value;
+      current = current!.next;
+    }
+    return arr;
+  }
+  /**
+   * reverse
+   */
+  public reverse() {
+    let current = this.first;
+    let prev = null;
+    while (current) {}
+  }
 }
+
+const mmd = {
+  value: 1,
+  next: { value: 2, next: { value: 3, next: { value: 4, next: null } } },
+};
 
 const linkedList = new LinkedList();
 linkedList.addFirst(2);
 linkedList.addFirst(1);
 linkedList.addLast(3);
-linkedList.addLast(4);
-linkedList.addLast(5);
 
-linkedList.deleteLast();
+// linkedList.deleteLast();
+// linkedList.deleteFirst();
 
+// console.log(linkedList.contain(1));
+// console.log(linkedList.indexOf(0));
+// linkedList.reverse();
 console.log(linkedList);
-// console.log(linkedList.indexOf(2));
+console.log(linkedList.length);
+console.log(linkedList.toArray());
