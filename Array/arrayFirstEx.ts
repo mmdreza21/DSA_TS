@@ -99,9 +99,7 @@ class CArray<T extends string | number> {
   public reverse(deepClone: boolean = false): Array<string | number> {
     const result = new Array(this.size);
     for (let i = 0, j = this.size - 1; j >= 0; i++, j--) {
-      result[i] = deepClone
-        ? JSON.parse(JSON.stringify(this.arr[j]))
-        : this.arr[j];
+      result[i] = deepClone ? structuredClone(this.arr[j]) : this.arr[j];
     }
     return result;
   }

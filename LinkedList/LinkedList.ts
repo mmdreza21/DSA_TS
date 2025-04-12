@@ -127,10 +127,55 @@ class LinkedList {
   /**
    * reverse
    */
-  public reverse() {
+  public reverse(): void {
+    if (this.isEmpty) return;
     let current = this.first;
     let prev = null;
-    while (current) {}
+    while (current) {
+      const next = current.next;
+      current.next = prev;
+
+      prev = current;
+      current = next;
+    }
+    this.last = this.first;
+    this.first = prev;
+  }
+  // mosh' solution --- mine is better
+  // let current = this.first?.next;
+  // let prev = this.first;
+
+  // while (current) {
+  //   const next = current.next;
+  //   current.next = prev;
+
+  //   prev = current;
+  //   current = next;
+  // }
+  // this.last = this.first;
+  // this.last!.next = null;
+  // this.last = this.first;
+  // this.first = prev;
+  /**
+   * findNode
+   */
+  public getKThFromEnd(n: number) {
+    if (n <= 0 || n > this.size) throw new Error("Invalid value for 'n'");
+    if (this.isEmpty) throw new Error("List is empty");
+    if (n === this.size) return this.first!.value;
+
+    let current = this.first!.next;
+    let distance = n - 1;
+    while (distance--) current = current!.next;
+    // if we don't know the size of our list then in this while
+    //  if(!current) throw new Error("Invalid value for 'n'");
+
+    let prev = this.first;
+    while (current) {
+      prev = prev!.next;
+      current = current.next;
+    }
+    return prev?.value;
   }
 }
 
@@ -143,13 +188,11 @@ const linkedList = new LinkedList();
 linkedList.addFirst(2);
 linkedList.addFirst(1);
 linkedList.addLast(3);
+linkedList.addLast(4);
+linkedList.addLast(5);
+linkedList.addLast(6);
+linkedList.addLast(7);
+linkedList.addLast(8);
 
-// linkedList.deleteLast();
-// linkedList.deleteFirst();
-
-// console.log(linkedList.contain(1));
-// console.log(linkedList.indexOf(0));
-// linkedList.reverse();
-console.log(linkedList);
-console.log(linkedList.length);
 console.log(linkedList.toArray());
+console.log(linkedList.getKThFromEnd(6));
