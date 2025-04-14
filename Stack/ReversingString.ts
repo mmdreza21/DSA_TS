@@ -1,17 +1,17 @@
-const str: string = "mamadreza";
+class StringReverer {
+  /**
+   * reverse
+   */
+  public reverse(str: string) {
+    let stack = [...str];
 
-const arr = new Array<string>(str.length);
-let reversedStr: string = "";
-let reversedArr: string[] = [];
+    let reversedStr = "";
 
-for (let index = str.length; index >= 0; index--) {
-  const element = str[index];
-  arr.push(element);
-  console.log(element);
+    // while (stack.length > 0) reversedStr += stack.pop();
 
-  //   reversedArr.push(arr.pop()!);
+    stack.reverse();
+    reversedStr = stack.join("");
+
+    return reversedStr;
+  }
 }
-
-reversedStr = arr.join("");
-
-console.log(reversedStr);
