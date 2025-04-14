@@ -7,7 +7,7 @@ class ListNode {
   }
 }
 
-class LinkedList {
+export class LinkedList {
   private first: ListNode | null = null;
   private last: ListNode | null = null;
   private size: number = 0;
@@ -161,7 +161,7 @@ class LinkedList {
    */
   public getKThFromEnd(n: number) {
     if (n <= 0 || n > this.size) throw new Error("Invalid value for 'n'");
-    if (this.isEmpty) throw new Error("List is empty");
+    if (this.isEmpty) throw new Error("IllegalStateException");
     if (n === this.size) return this.first!.value;
 
     let current = this.first!.next;
@@ -176,6 +176,54 @@ class LinkedList {
       current = current.next;
     }
     return prev?.value;
+  }
+  public printMiddle() {
+    if (this.isEmpty) throw new Error("IllegalStateException");
+    let current = this.first?.next;
+    let prev = this.first;
+    while (current) {
+      if (!current.next) return [prev?.value, prev?.next?.value];
+      current = current.next.next;
+      prev = prev!.next;
+    }
+    return prev?.value;
+  }
+
+  /**
+   * LinkedList.hasLoop()
+   */
+  public hasLoop(): boolean {
+    if (this.isEmpty) throw new Error("IllegalStateException");
+    let fast = this.first?.next;
+    let slow = this.first;
+    while (fast && fast!.next) {
+      if (fast === slow) return true;
+      fast = fast!.next!.next;
+      slow = slow!.next;
+    }
+    return false;
+  }
+
+  /**
+   * createLoop
+   */
+  public createLoop() {
+    if (this.isEmpty) throw new Error("IllegalStateException");
+    if (!this.first?.next) throw new Error("IllegalStateException");
+
+    this.last!.next = this.first;
+  }
+
+  public createLoopToK(k: number): void {
+    if (this.isEmpty) throw new Error("List is empty");
+    if (k < 0 || k >= this.size) throw new Error("Invalid loop position");
+
+    let loopStart = this.first;
+    for (let i = 0; i < k; i++) {
+      loopStart = loopStart!.next;
+    }
+
+    this.last!.next = loopStart;
   }
 }
 
@@ -192,7 +240,22 @@ linkedList.addLast(4);
 linkedList.addLast(5);
 linkedList.addLast(6);
 linkedList.addLast(7);
-linkedList.addLast(8);
+linkedList.addLast(7);
 
 console.log(linkedList.toArray());
-console.log(linkedList.getKThFromEnd(6));
+// console.log(linkedList.getKThFromEnd(6));
+console.log(linkedList.printMiddle());
+
+// // creating a loop
+// const lastNode = linkedList["last"];
+// const secondNode = linkedList["first"]?.next?.next;
+
+// if (lastNode && secondNode) {
+//   lastNode.next = secondNode;
+// }
+
+linkedList.createLoop();
+
+console.log(linkedList);
+
+console.log(linkedList.hasLoop());
