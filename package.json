@@ -4,7 +4,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_NO_WARNINGS=1; nodemon"
+    "start": "export NODE_NO_WARNINGS=1; nodemon"
   },
   "keywords": [],
   "author": "",
