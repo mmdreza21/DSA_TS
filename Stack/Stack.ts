@@ -7,6 +7,12 @@ export class Stack {
     this.maxSize = size;
     this.array = new Array<number>(size);
   }
+  get length() {
+    return this.size;
+  }
+  get arr() {
+    return this.array;
+  }
 
   /**
    * push
@@ -14,26 +20,44 @@ export class Stack {
   public push(item: number) {
     if (this.size >= this.maxSize)
       throw new Error("stack overFlow -> https://stackoverflow.com/");
-    this.array[this.size - 1] = item;
+    this.array[this.size] = item;
     this.size++;
   }
 
   /**
    * pop
    */
-  public pop() {}
+  public pop(): number | undefined {
+    if (this.size === 0) return undefined;
+
+    // this.array = this.array.slice(0, -1);
+    // this.array.splice(-1, 1);
+
+    //the best way seems to be is pop()
+    return this.arr.pop();
+  }
 
   /**
    * peek
    */
-  public peek() {}
+  public peek(): number | undefined {
+    if (this.size === 0) return undefined;
+    return this.array.at(-1);
+  }
 
   /**
    * isEmpty
    */
-  public isEmpty() {}
+  public isEmpty() {
+    return !this.size;
+  }
 }
-const stack = new Stack(1);
+const stack = new Stack(3);
 stack.push(2);
+stack.push(3);
+stack.push(4);
+stack.pop();
+console.log(stack.peek());
+console.log(stack.isEmpty());
 
-console.log(stack);
+console.log(stack.arr);
