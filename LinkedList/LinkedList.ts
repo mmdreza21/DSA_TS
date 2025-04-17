@@ -226,36 +226,3 @@ export class LinkedList {
     this.last!.next = loopStart;
   }
 }
-
-const mmd = {
-  value: 1,
-  next: { value: 2, next: { value: 3, next: { value: 4, next: null } } },
-};
-
-const linkedList = new LinkedList();
-linkedList.addFirst(2);
-linkedList.addFirst(1);
-linkedList.addLast(3);
-linkedList.addLast(4);
-linkedList.addLast(5);
-linkedList.addLast(6);
-linkedList.addLast(7);
-linkedList.addLast(7);
-
-console.log(linkedList.toArray());
-// console.log(linkedList.getKThFromEnd(6));
-console.log(linkedList.printMiddle());
-
-// // creating a loop
-// const lastNode = linkedList["last"];
-// const secondNode = linkedList["first"]?.next?.next;
-
-// if (lastNode && secondNode) {
-//   lastNode.next = secondNode;
-// }
-
-linkedList.createLoop();
-
-console.log(linkedList);
-
-console.log(linkedList.hasLoop());
