@@ -81,5 +81,3 @@ class Expression {
     return !stack.length;
   }
 }
-const exp = new Expression();
-console.log(exp.checkBalance("{1+2}{"));
