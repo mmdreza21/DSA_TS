@@ -1,63 +1,58 @@
 export class Stack {
-  private array: number[];
+  private stack: number[];
   private size: number = 0;
-  private maxSize: number;
+  private capacity: number;
+
   constructor(size: number) {
-    if (size < 0) throw new Error("size can't be 0");
-    this.maxSize = size;
-    this.array = new Array<number>(size);
+    if (size < 0) throw new Error("Size must be positive");
+    this.capacity = size;
+    this.stack = new Array<number>(size);
   }
   get length() {
     return this.size;
   }
-  get arr() {
-    return this.array;
+  get stackContent() {
+    return this.stack.slice(0, this.size);
   }
 
-  /**
-   * push
-   */
   public push(item: number) {
-    if (this.size >= this.maxSize)
+    if (this.size >= this.capacity)
       throw new Error("stack overFlow -> https://stackoverflow.com/");
-    this.array[this.size] = item;
-    this.size++;
+    this.stack[this.size++] = item;
   }
 
-  /**
-   * pop
-   */
   public pop(): number | undefined {
-    if (this.size === 0) return undefined;
-
-    // this.array = this.array.slice(0, -1);
-    // this.array.splice(-1, 1);
-
-    //the best way seems to be is pop()
-    return this.arr.pop();
+    if (this.isEmpty()) return undefined;
+    const value = this.stack[--this.size];
+    this.stack[this.size] = undefined!; // Optional cleanup
+    return value;
   }
 
-  /**
-   * peek
-   */
   public peek(): number | undefined {
-    if (this.size === 0) return undefined;
-    return this.array.at(-1);
+    if (this.isEmpty()) return undefined;
+    // return this.stack[this.size -1]
+    return this.stack.at(-1);
+  }
+
+  public isEmpty(): boolean {
+    // this.size === 0 is explicit - clearly shows we're checking for zero
+    // !this.size is implicit - relies on JavaScript's truthy/falsy coercion
+    return this.size === 0;
+  }
+
+  public isFull(): boolean {
+    return this.size === this.capacity;
   }
 
   /**
-   * isEmpty
+   * @returns min member of the stack
    */
-  public isEmpty() {
-    return !this.size;
+  public min(): number {
+    if (this.isEmpty()) throw new Error("Stack is empty");
+    let min = this.stack[0];
+    for (const e of this.stack) {
+      if (e < min) min = e;
+    }
+    return min;
   }
 }
-const stack = new Stack(3);
-stack.push(2);
-stack.push(3);
-stack.push(4);
-stack.pop();
-console.log(stack.peek());
-console.log(stack.isEmpty());
-
-console.log(stack.arr);
