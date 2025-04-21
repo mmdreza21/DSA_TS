@@ -1,59 +1,52 @@
 export class PriorityQueue {
   private queue: Array<number>;
-  private counter: number = 0;
+  private count: number = 0;
   private capacity: number = 0;
-
-  private front: number = 0;
-  private rear: number = 0;
 
   constructor(size: number) {
     this.capacity = size;
-    this.queue = new Array(size).fill(0);
+    this.queue = new Array(size);
   }
 
   enqueue(item: number): void {
     if (this.isFull()) throw new Error("IllegalStateException");
-    if (this.isEmpty()) {
-      this.queue[this.rear] = item;
-    } else {
-      for (let index = this.counter - 1; index >= 0; index--) {
-        const current = this.queue[index];
 
-        if (item <= current) {
-          console.log(item);
+    // let insertIndex = this.count;
+    // while (insertIndex > 0 && item < this.queue[insertIndex - 1]) {
+    //   this.queue[insertIndex] = this.queue[insertIndex - 1];
+    //   insertIndex--;
+    // }
+    // this.queue[insertIndex] = item;
 
-          if (this.counter === 1) {
-            this.queue[index + 1] = current;
-            this.queue[index] = item;
-          } else {
-            this.queue[index + 1] = current;
-          }
-        } else {
-          this.queue[index + 1] = item;
-        }
-      }
+    const i = this.shiftItemsToInsert(item);
+    this.queue[i] = item;
+
+    this.count++;
+  }
+
+  private shiftItemsToInsert(item: number): number {
+    let i;
+    for (i = this.count - 1; i >= 0; i--) {
+      const current = this.queue[i];
+      if (item < current) {
+        this.queue[i + 1] = current;
+      } else break;
     }
-
-    this.rear = (this.rear + 1) % this.capacity;
-    this.counter++;
+    return i + 1;
   }
 
   dequeue(): number | undefined {
-    if (this.counter == 0) throw new Error("the Queue is empty!");
-    const val = this.queue[this.front];
-    this.queue[this.front] = 0;
-    this.front = (this.front + 1) % this.capacity;
-    this.counter--;
-    return val;
+    if (this.count == 0) throw new Error("the Queue is empty!");
+    return this.queue[--this.count];
   }
 
   peek(): number | undefined {
-    if (this.counter == 0) return undefined;
-    return this.queue[this.front];
+    if (this.count == 0) return undefined;
+    return this.queue[this.count - 1];
   }
 
   isEmpty(): boolean {
-    return this.counter === 0;
+    return this.count === 0;
   }
 
   isFull(): boolean {
@@ -61,7 +54,7 @@ export class PriorityQueue {
   }
 
   get size(): number {
-    return this.counter;
+    return this.count;
   }
 
   print() {

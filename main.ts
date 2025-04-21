@@ -13,13 +13,19 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const queue = new PriorityQueue(3);
+    const queue = new PriorityQueue(5);
 
+    queue.enqueue(2);
     queue.enqueue(5);
 
-    queue.enqueue(3);
-    queue.enqueue(2);
+    queue.enqueue(1);
+    queue.enqueue(0);
+    queue.enqueue(8);
     queue.print();
+
+    while (!queue.isEmpty()) {
+      console.log(queue.dequeue());
+    }
   }
 }
 
