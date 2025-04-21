@@ -1,8 +1,8 @@
 // main.ts
 import readline from "readline";
-import { DualStack } from "./Stack/DualStack.ts"; // Note .js extension
-import { Stack } from "./Stack/Stack.ts";
-import { CArray } from "./Array/arrayFirstEx.ts";
+
+import { LinkedListQueue } from "./Queue/LinkedListQueue.ts";
+import { StackWithTwoQueues } from "./Stack/StackWithTwoQueues.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -11,15 +11,17 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const arr = new CArray(4);
+    const stack = new StackWithTwoQueues(8);
 
-    arr.insert(1);
-    arr.insert(2);
-    arr.insert(3);
-    arr.insert(4);
-
-    arr.insertAt(4, 1);
-    arr.print();
+    stack.push(1);
+    stack.push(2);
+    stack.push(3);
+    stack.push(4);
+    stack.push(5);
+    console.log(stack.pop());
+    console.log(stack.pop());
+    stack.print();
+    console.log(stack.peek());
   }
 }
 
