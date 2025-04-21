@@ -229,4 +229,12 @@ export class LinkedList {
 
     this.last!.next = loopStart;
   }
+
+  get rear() {
+    return this.last;
+  }
+
+  get front() {
+    return this.first;
+  }
 }
