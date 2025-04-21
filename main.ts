@@ -1,10 +1,8 @@
 // main.ts
 import readline from "readline";
-
-import { Queue } from "./Queue/Queue.ts";
-import { QueueReverser } from "./Queue/QueueReverser.ts";
-import { QueueWithTwoStacks } from "./Queue/QueueWithTwoStacks.ts";
-import { PriorityQueue } from "./Queue/PriorityQueue.ts";
+import { DualStack } from "./Stack/DualStack.ts"; // Note .js extension
+import { Stack } from "./Stack/Stack.ts";
+import { CArray } from "./Array/arrayFirstEx.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -13,19 +11,15 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const queue = new PriorityQueue(5);
+    const arr = new CArray(4);
 
-    queue.enqueue(2);
-    queue.enqueue(5);
+    arr.insert(1);
+    arr.insert(2);
+    arr.insert(3);
+    arr.insert(4);
 
-    queue.enqueue(1);
-    queue.enqueue(0);
-    queue.enqueue(8);
-    queue.print();
-
-    while (!queue.isEmpty()) {
-      console.log(queue.dequeue());
-    }
+    arr.insertAt(4, 1);
+    arr.print();
   }
 }
 

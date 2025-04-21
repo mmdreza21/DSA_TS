@@ -1,4 +1,4 @@
-class CArray<T extends string | number> {
+export class CArray<T extends string | number> {
   private arr: Array<T>;
   private size: number;
 
@@ -124,8 +124,6 @@ class CArray<T extends string | number> {
   }
 
   public print() {
-    for (let index = 0; index < this.size; index++) {
-      console.log(this.arr[index]);
-    }
+    console.log(this.arr.join(","));
   }
 }

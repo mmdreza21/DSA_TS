@@ -165,7 +165,11 @@ export class LinkedList {
     if (n === this.size) return this.first!.value;
 
     let current = this.first!.next;
+
+    // 10 -> 20 -> 30 -> 40 -> 50 -> 60
+    //              p   distance     c
     let distance = n - 1;
+
     while (distance--) current = current!.next;
     // if we don't know the size of our list then in this while
     //  if(!current) throw new Error("Invalid value for 'n'");
