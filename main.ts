@@ -1,8 +1,7 @@
 // main.ts
 import readline from "readline";
 
-import { LinkedListQueue } from "./Queue/LinkedListQueue.ts";
-import { StackWithTwoQueues } from "./Stack/StackWithTwoQueues.ts";
+import { CharFinder } from "./HashTables/CharFinder.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -11,17 +10,8 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const stack = new StackWithTwoQueues(8);
-
-    stack.push(1);
-    stack.push(2);
-    stack.push(3);
-    stack.push(4);
-    stack.push(5);
-    console.log(stack.pop());
-    console.log(stack.pop());
-    stack.print();
-    console.log(stack.peek());
+    const f = new CharFinder();
+    console.log(f.FirstRepeatedChar("green apple"));
   }
 }
 
