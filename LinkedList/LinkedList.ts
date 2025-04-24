@@ -72,6 +72,26 @@ export class LinkedList<T> {
     this.size--;
   }
 
+  public remove(node: T | undefined) {
+    if (!node) throw new Error("node is required");
+
+    if (node === this.first?.value) return this.deleteFirst();
+    if (node === this.last?.value) return this.deleteLast();
+
+    let current = this.first;
+    let prev: ListNode<T> | null = null;
+    while (current) {
+      const next = current!.next;
+      if (node === current.value) {
+        prev!.next = next;
+        this.size--;
+        return;
+      }
+      prev = current;
+      current = next;
+    }
+  }
+
   /**
    * indexOf the givin value
    * @param value:number
@@ -237,4 +257,19 @@ export class LinkedList<T> {
   get front() {
     return this.first;
   }
+
+  *[Symbol.iterator](): IterableIterator<T> {
+    let current = this.first;
+    while (current !== null) {
+      yield current.value;
+      current = current.next;
+    }
+  }
+  //behind the scenes
+  //   let iter = myList[Symbol.iterator]();
+  // let result = iter.next();
+  // while (!result.done) {
+  //   console.log(result.value);
+  //   result = iter.next();
+  // }
 }

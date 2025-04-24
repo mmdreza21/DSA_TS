@@ -1,7 +1,7 @@
 import { LinkedList } from "../LinkedList/LinkedList.ts";
 
 export class LinkedListQueue {
-  private queue: LinkedList;
+  private queue: LinkedList<number>;
   private counter: number = 0;
 
   constructor() {
@@ -16,6 +16,7 @@ export class LinkedListQueue {
   dequeue(): number | undefined {
     if (this.counter === 0) throw new Error("Q is empty");
     const val = this.queue.front?.value;
+    // const val = this.queue.getKThFromEnd(this.counter);
     this.queue.deleteFirst();
     this.counter--;
     return val;
@@ -35,6 +36,6 @@ export class LinkedListQueue {
   }
 
   print() {
-    console.log("[", this.queue.toArray().join(" -> "), "]");
+    console.log("[", [...this.queue].join(" -> "), "]");
   }
 }
