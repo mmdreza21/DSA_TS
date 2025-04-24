@@ -2,6 +2,7 @@
 import readline from "readline";
 
 import { CharFinder } from "./HashTables/CharFinder.ts";
+import { HashTable } from "./HashTables/HashTable.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -10,8 +11,12 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const f = new CharFinder();
-    console.log(f.FirstRepeatedChar("green apple"));
+    const hT = new HashTable(5);
+    hT.put(3, "mmdreza");
+    hT.put(4, "ali");
+    hT.put(1, "ahad");
+    hT.put(6, "ahmad");
+    hT.print();
   }
 }
 
