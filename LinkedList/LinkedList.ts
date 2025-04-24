@@ -1,25 +1,25 @@
-class ListNode {
-  public value: number;
-  public next: ListNode | null = null;
+class ListNode<T> {
+  public value: T;
+  public next: ListNode<T> | null = null;
 
-  constructor(value: number) {
+  constructor(value: T) {
     this.value = value;
   }
 }
 
-export class LinkedList {
-  private first: ListNode | null = null;
-  private last: ListNode | null = null;
+export class LinkedList<T> {
+  private first: ListNode<T> | null = null;
+  private last: ListNode<T> | null = null;
   private size: number = 0;
 
-  private get isEmpty(): boolean {
+  public get isEmpty(): boolean {
     return !this.first || !this.last;
   }
   /**
    * addLast
    * @param value
    */
-  public addLast(value: number) {
+  public addLast(value: T) {
     const node = new ListNode(value);
     if (this.isEmpty) this.last = this.first = node;
     else {
@@ -33,7 +33,7 @@ export class LinkedList {
    * addFirst
    * @param value:number
    */
-  public addFirst(value: number) {
+  public addFirst(value: T) {
     const node = new ListNode(value);
     if (this.isEmpty) this.last = this.first = node;
     else {
@@ -89,7 +89,7 @@ export class LinkedList {
     return -1;
   }
 
-  private getPrevious(node: ListNode) {
+  private getPrevious(node: ListNode<T>) {
     let current = this.first;
     if (current === node) return null;
     while (current?.next) {
