@@ -27,45 +27,47 @@ export class HashTable {
 
   public put(k: number, v: string) {
     if (this.count >= this.capacity) throw new Error("the Hash table is full");
-    const index = this.hash(k);
-    if (!this.entries[index]) this.entries[index] = new LinkedList<Entry>();
 
-    const bucket = this.entries[index];
-    for (const entry of bucket) {
-      if (entry.key === k) {
-        entry.val = v;
-        return;
-      }
+    const entry = this.getEntry(k);
+    if (entry) {
+      entry.val = v;
+      return;
     }
 
-    bucket.addLast(new Entry(k, v));
+    this.getOrCreateBucket(k).addLast(new Entry(k, v));
 
     this.count++;
   }
 
   public get(k: number): string | undefined {
     if (this.isEmpty()) return undefined;
+    return this.getEntry(k)?.val;
+  }
 
+  public remove(k: number) {
+    const entry = this.getEntry(k);
+    if (!entry) throw new Error("the givin key is invalid!");
+    this.getBucket(k).remove(entry);
+  }
+
+  private getBucket(k: number) {
+    return this.entries[this.hash(k)];
+  }
+
+  private getOrCreateBucket(k: number) {
     const index = this.hash(k);
-    let bucket = this.entries[index];
-    if (bucket)
-      for (const entry of bucket) if (entry!.key === k) return entry!.val;
+    if (!this.entries[index]) this.entries[index] = new LinkedList<Entry>();
 
+    return this.entries[index];
+  }
+  private getEntry(k: number) {
+    let bucket = this.getBucket(k);
+    if (bucket) for (const entry of bucket) if (entry.key === k) return entry;
     return undefined;
   }
 
   private isEmpty() {
     return this.count === 0;
-  }
-
-  public remove(k: number) {
-    const index = this.hash(k);
-    let bucket = this.entries[index];
-    if (!bucket) throw new Error("the givin key is invalid!");
-    for (const entry of bucket) {
-      if (entry.key === k) return bucket.remove(entry);
-    }
-    throw new Error("the givin key is invalid!");
   }
 
   public print() {
