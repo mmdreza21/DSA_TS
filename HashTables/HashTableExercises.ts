@@ -58,12 +58,15 @@ export class HashTableExercises {
 
     for (let i = 0; i < nums.length; i++) {
       const complement = target - nums[i];
+      console.log(target, "-", nums[i], complement, numMap);
+
       if (numMap.has(complement)) {
         return [numMap.get(complement)!, i];
       }
       numMap.set(nums[i], i);
     }
+    console.log(numMap);
 
-    return null; // or throw error if pair must exist
+    return null;
   }
 }
