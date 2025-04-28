@@ -26,7 +26,6 @@ export class BinaryTree {
       if (current.value < value) {
         current = current.leftChild;
       } else {
-        console.log(current.value, value);
         current = current.rightChild;
       }
     }
