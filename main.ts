@@ -2,6 +2,7 @@
 import readline from "readline";
 
 import { HashMap } from "./HashTables/HashMap.ts";
+import { BinaryTree } from "./Trees/BinaryTree.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -10,18 +11,12 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const hm = new HashMap(5);
-
-    hm.put(6, "mmd");
-    hm.put(1, "mmdhasan");
-    hm.put(5, "5");
-    hm.put(12, "2");
-    hm.remove(6);
-    hm.remove(0);
-    hm.put(6, "mmdali");
-    hm.put(0, "reza");
-    hm.put(1, "reza");
-    console.log([...hm]);
+    const tree = new BinaryTree(10);
+    tree.insert(5);
+    tree.insert(15);
+    tree.insert(6);
+    tree.insert(1);
+    console.log(tree);
   }
 }
 
