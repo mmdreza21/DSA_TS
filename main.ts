@@ -1,7 +1,7 @@
 // main.ts
 import readline from "readline";
 
-import { HashMap } from "./HashTables/Hashmap.ts";
+import { HashMap } from "./HashTables/HashMap.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -16,6 +16,8 @@ class Main {
     hm.put(1, "mmdhasan");
     hm.put(5, "5");
     hm.put(12, "2");
+    hm.remove(6);
+    hm.remove(0);
     hm.put(6, "mmdali");
     hm.put(0, "reza");
     hm.put(1, "reza");
