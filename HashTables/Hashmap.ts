@@ -22,15 +22,26 @@ export class HashMap {
   }
 
   public put(key: number, val: string) {
-    const index = this.hash(key);
-    for (let i = index; i < this.table.length; i++) {
-      const element = this.table[i];
-      if (!element) {
-        this.table[i] = new Entry(key, val);
-        break;
+    for (let i = 0; i < this.capacity; i++) {
+      const e = this.table[i];
+      if (e?.key === key) {
+        this.table[i]!.val = val;
+        return;
       }
     }
-    this.count++;
+    if (this.isFull()) throw new Error("!the hashmap is full!");
+
+    const entry = new Entry(key, val);
+    let index = this.hash(key);
+
+    for (let i = index; i < this.capacity; i++) {
+      if (!this.table[index]) {
+        this.table[index] = entry;
+        this.count++;
+        return;
+      }
+      index = this.hash(i + 1);
+    }
   }
 
   /**
@@ -56,7 +67,16 @@ export class HashMap {
     return this.count === 0;
   }
 
+  private isFull() {
+    return this.count === this.capacity;
+  }
   get size() {
     return this.count;
+  }
+
+  *[Symbol.iterator](): IterableIterator<Entry | undefined> {
+    for (const e of this.table) {
+      yield e;
+    }
   }
 }
