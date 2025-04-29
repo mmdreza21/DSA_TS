@@ -11,12 +11,15 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const tree = new BinaryTree(10);
+    const tree = new BinaryTree();
+    tree.insert(10);
     tree.insert(5);
     tree.insert(15);
     tree.insert(6);
     tree.insert(1);
-    console.log(tree);
+    console.log(tree.find(1));
+    console.log(tree.find(18));
+    console.log([...tree]);
   }
 }
 
