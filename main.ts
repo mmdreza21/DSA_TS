@@ -12,14 +12,21 @@ const rl = readline.createInterface({
 class Main {
   constructor() {
     const tree = new BinaryTree();
-    tree.insert(10);
-    tree.insert(5);
-    tree.insert(15);
-    tree.insert(6);
+
+    tree.insert(7);
+    tree.insert(4);
     tree.insert(1);
-    console.log(tree.find(1));
-    console.log(tree.find(18));
+    tree.insert(6);
+    tree.insert(9);
+    tree.insert(8);
+    tree.insert(10);
     console.log([...tree]);
+    console.log("tree.traversePreOrder()");
+    console.log(tree.traversePreOrder());
+    console.log("tree.traverseInOrder()");
+    console.log(tree.traverseInOrder());
+    console.log("tree.traversePostOrder()");
+    console.log(tree.traversePostOrder());
   }
 }
 

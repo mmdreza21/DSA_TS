@@ -62,19 +62,42 @@ export class BinaryTree {
   public find(value: number): boolean {
     let current = this.root;
     while (current) {
-      if (current.value > value) {
-        if (current.leftChild?.value === value) {
-          return true;
-        }
+      if (value < current.value) {
         current = current.leftChild;
-      } else {
-        if (current.rightChild?.value === value) {
-          return true;
-        }
+      } else if (current.value < value) {
         current = current.rightChild;
+      } else {
+        return true;
       }
     }
     return false;
+  }
+
+  public traversePreOrder(root?: TreeNode | null): void {
+    const startNode = root ?? this.root;
+    if (root === null) return;
+
+    console.log(startNode!.value);
+    this.traversePreOrder(startNode!.leftChild);
+    this.traversePreOrder(startNode!.rightChild);
+  }
+
+  public traverseInOrder(root?: TreeNode | null): void {
+    const startNode = root ?? this.root;
+    if (root === null) return;
+
+    this.traverseInOrder(startNode!.leftChild);
+    console.log(startNode!.value);
+    this.traverseInOrder(startNode!.rightChild);
+  }
+
+  public traversePostOrder(root?: TreeNode | null): void {
+    const startNode = root ?? this.root;
+    if (root === null) return;
+
+    this.traversePostOrder(startNode!.leftChild);
+    this.traversePostOrder(startNode!.rightChild);
+    console.log(startNode!.value);
   }
 
   *[Symbol.iterator](): IterableIterator<{
