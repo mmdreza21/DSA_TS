@@ -171,6 +171,24 @@ export class BinaryTree {
     return node.leftChild === null && node.rightChild === null;
   }
 
+  private arr: Array<number> = [];
+  public getNodesAtKDist(distance: number) {
+    if (!this.root) return 0;
+    return this.nodeAtKDistance(this.root, distance);
+  }
+
+  private nodeAtKDistance(root: TreeNode | null, distance: number) {
+    if (root === null) return;
+    if (distance === 0) {
+      this.arr.push(root!.value);
+      return this.arr;
+    }
+
+    this.nodeAtKDistance(root!.leftChild, distance - 1);
+    this.nodeAtKDistance(root!.rightChild, distance - 1);
+    return this.arr;
+  }
+
   *[Symbol.iterator](): IterableIterator<{
     value: number;
     left: number | null;

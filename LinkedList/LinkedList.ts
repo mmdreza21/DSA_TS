@@ -57,6 +57,16 @@ export class LinkedList<T> {
     this.size--;
   }
 
+  private getPrevious(node: ListNode<T>) {
+    let current = this.first;
+    if (current === node) return null;
+    while (current?.next) {
+      if (current.next === node) return current;
+      current = current.next;
+    }
+    return null;
+  }
+
   /**
    *  delete the last item in the linkedList
    */
@@ -109,16 +119,6 @@ export class LinkedList<T> {
     return -1;
   }
 
-  private getPrevious(node: ListNode<T>) {
-    let current = this.first;
-    if (current === node) return null;
-    while (current?.next) {
-      if (current.next === node) return current;
-      current = current.next;
-    }
-    return null;
-  }
-
   /**
  * contain
   @param value:number
@@ -149,8 +149,10 @@ export class LinkedList<T> {
    */
   public reverse(): void {
     if (this.isEmpty) return;
+
     let current = this.first;
     let prev = null;
+
     while (current) {
       const next = current.next;
       current.next = prev;
@@ -201,6 +203,7 @@ export class LinkedList<T> {
     }
     return prev?.value;
   }
+
   public printMiddle() {
     if (this.isEmpty) throw new Error("IllegalStateException");
     let current = this.first?.next;
