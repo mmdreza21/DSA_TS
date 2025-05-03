@@ -21,8 +21,10 @@ class Main {
     tree.insert(60);
     tree.insert(25);
     tree.insert(2);
+    // console.log(tree.getNodesAtKDist(3));
+    console.log(tree.size());
 
-    console.log(tree.getNodesAtKDist(1));
+    // tree.traverseLevelOrder();
   }
 }
 

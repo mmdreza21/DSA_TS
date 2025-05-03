@@ -11,6 +11,8 @@ class TreeNode {
 export class BinaryTree {
   private root: TreeNode | null = null;
 
+  private counter: number = 0;
+
   public insert(value: number): void {
     const newNode = new TreeNode(value);
     if (!this.root) {
@@ -36,6 +38,7 @@ export class BinaryTree {
         current = right;
       }
     }
+    this.counter++;
   }
 
   public find(value: number): boolean {
@@ -171,22 +174,38 @@ export class BinaryTree {
     return node.leftChild === null && node.rightChild === null;
   }
 
-  private arr: Array<number> = [];
   public getNodesAtKDist(distance: number) {
-    if (!this.root) return 0;
-    return this.nodeAtKDistance(this.root, distance);
+    const arr: Array<number> = [];
+    if (!this.root) return;
+    return this.nodeAtKDistance(this.root, distance, arr);
   }
 
-  private nodeAtKDistance(root: TreeNode | null, distance: number) {
+  private nodeAtKDistance(
+    root: TreeNode | null,
+    distance: number,
+    arr: Array<number>
+  ) {
     if (root === null) return;
     if (distance === 0) {
-      this.arr.push(root!.value);
-      return this.arr;
+      arr.push(root!.value);
+      return arr;
     }
 
-    this.nodeAtKDistance(root!.leftChild, distance - 1);
-    this.nodeAtKDistance(root!.rightChild, distance - 1);
-    return this.arr;
+    this.nodeAtKDistance(root!.leftChild, distance - 1, arr);
+    this.nodeAtKDistance(root!.rightChild, distance - 1, arr);
+    return arr;
+  }
+
+  public traverseLevelOrder() {
+    for (let i = 0; i <= this.height(); i++) {
+      for (const element of this.getNodesAtKDist(i)!) {
+        console.log(element);
+      }
+    }
+  }
+
+  public size() {
+    return this.counter;
   }
 
   *[Symbol.iterator](): IterableIterator<{
