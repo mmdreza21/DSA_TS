@@ -11,22 +11,36 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const tree = new BinaryTree();
+    const tree1 = new BinaryTree();
+    const tree2 = new BinaryTree();
 
-    tree.insert(7);
-    tree.insert(4);
-    tree.insert(1);
-    tree.insert(6);
-    tree.insert(9);
-    tree.insert(8);
-    tree.insert(10);
-    console.log([...tree]);
-    console.log("tree.traversePreOrder()");
-    console.log(tree.traversePreOrder());
-    console.log("tree.traverseInOrder()");
-    console.log(tree.traverseInOrder());
-    console.log("tree.traversePostOrder()");
-    console.log(tree.traversePostOrder());
+    // Build first tree
+    tree1.insert(20);
+    tree1.insert(10);
+    tree1.insert(30);
+    tree1.insert(40);
+    tree1.insert(50);
+
+    // Build second tree with same structure
+    tree2.insert(20);
+    tree2.insert(10);
+    tree2.insert(30);
+    tree2.insert(40);
+    tree2.insert(50);
+
+    // Build third tree with different structure
+    const tree3 = new BinaryTree();
+    tree3.insert(20);
+    tree3.insert(30);
+    tree3.insert(70);
+    tree3.insert(10);
+    tree3.insert(50);
+
+    console.log("tree1 equals tree2:", tree1.equals(tree2)); // Should be true
+    console.log("tree1 equals tree3:", tree1.equals(tree3)); // Should be false
+    tree1.swapRoot();
+    console.log("tree1 with swap", tree1.isBST());
+    console.log("tree2", tree2.isBST());
   }
 }
 
