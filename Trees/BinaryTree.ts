@@ -38,7 +38,7 @@ export class BinaryTree {
         current = right;
       }
     }
-    this.counter++;
+    // this.counter++;
   }
 
   public find(value: number): boolean {
@@ -204,8 +204,30 @@ export class BinaryTree {
     }
   }
 
-  public size() {
-    return this.counter;
+  public size(root?: TreeNode) {
+    const startNode = root ?? this.root;
+    if (!this.root) return 0;
+    if (root === null) return;
+
+    this.size(startNode?.leftChild!);
+    this.size(startNode?.rightChild!);
+    return this.counter++;
+  }
+
+  private leafCount: number = 0;
+  public countLeaves(root?: TreeNode) {
+    const startNode = root ?? this.root;
+    if (!this.root) return 0;
+
+    if (root === null) return;
+    console.log("s");
+
+    if (this.isLeaf(startNode!)) return;
+    console.log("b");
+
+    this.countLeaves(startNode?.leftChild!);
+    this.countLeaves(startNode?.rightChild!);
+    return this.leafCount++;
   }
 
   *[Symbol.iterator](): IterableIterator<{
