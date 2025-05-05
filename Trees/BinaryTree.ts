@@ -11,8 +11,6 @@ class TreeNode {
 export class BinaryTree {
   private root: TreeNode | null = null;
 
-  private counter: number = 0;
-
   public insert(value: number): void {
     const newNode = new TreeNode(value);
     if (!this.root) {
@@ -171,7 +169,7 @@ export class BinaryTree {
   }
 
   private isLeaf(node: TreeNode): boolean {
-    return node.leftChild === null && node.rightChild === null;
+    return node !== null && node.leftChild === null && node.rightChild === null;
   }
 
   public getNodesAtKDist(distance: number) {
@@ -215,7 +213,6 @@ export class BinaryTree {
     );
   }
 
-  private leafCount: number = 0;
   public countLeaves(root?: TreeNode): number {
     const node = root ?? this.root;
     if (!node) return 0;
@@ -227,6 +224,47 @@ export class BinaryTree {
     return (
       this.countLeaves(node?.leftChild!) + this.countLeaves(node?.rightChild!)
     );
+  }
+
+  public max(root?: TreeNode | null): number {
+    const node = root ?? this.root;
+
+    if (!node) throw new Error("tree is empty");
+
+    if (node?.rightChild === null) return node.value;
+
+    return this.max(node?.rightChild);
+  }
+
+  public contain(value: number, root?: TreeNode | null): boolean {
+    const node = root === undefined ? this.root : root;
+
+    if (node?.value === value) return true;
+    if (node === null) return false;
+
+    return (
+      this.contain(value, node?.leftChild) ||
+      this.contain(value, node?.rightChild)
+    );
+  }
+
+  private findParent(value: number, root?: TreeNode): TreeNode | null {
+    const node = root === undefined ? this.root : root;
+
+    if (root === null) return null;
+
+    if (value < node?.value!) {
+      if (node?.leftChild?.value === value) return node;
+      return this.findParent(value, node!.leftChild!);
+    } else {
+      if (node?.rightChild?.value === value) return node;
+      return this.findParent(value, node!.rightChild!);
+    }
+  }
+
+  public areSibling(value1: number, value2: number, root?: TreeNode): boolean {
+    const node = root === undefined ? this.root : root;
+    return this.findParent(value1)?.value === this.findParent(value2)?.value;
   }
 
   *[Symbol.iterator](): IterableIterator<{

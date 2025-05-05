@@ -25,8 +25,8 @@ class Main {
     tree.insert(26);
 
     // console.log(tree.getNodesAtKDist(3));
-    console.log(tree.countLeaves());
-    console.log(tree.size());
+
+    console.log(tree.areSibling(14, 6));
 
     console.log([...tree]);
   }
