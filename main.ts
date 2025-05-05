@@ -26,6 +26,7 @@ class Main {
 
     // console.log(tree.getNodesAtKDist(3));
     console.log(tree.countLeaves());
+    console.log(tree.size());
 
     console.log([...tree]);
   }

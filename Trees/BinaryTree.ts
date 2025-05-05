@@ -204,30 +204,29 @@ export class BinaryTree {
     }
   }
 
-  public size(root?: TreeNode) {
+  public size(root?: TreeNode): number {
     const startNode = root ?? this.root;
-    if (!this.root) return 0;
-    if (root === null) return;
+    if (!startNode) return 0;
 
-    this.size(startNode?.leftChild!);
-    this.size(startNode?.rightChild!);
-    return this.counter++;
+    if (root === null) return 0;
+
+    return (
+      1 + this.size(startNode?.leftChild!) + this.size(startNode?.rightChild!)
+    );
   }
 
   private leafCount: number = 0;
-  public countLeaves(root?: TreeNode) {
-    const startNode = root ?? this.root;
-    if (!this.root) return 0;
+  public countLeaves(root?: TreeNode): number {
+    const node = root ?? this.root;
+    if (!node) return 0;
 
-    if (root === null) return;
-    console.log("s");
+    if (root === null) return 0;
 
-    if (this.isLeaf(startNode!)) return;
-    console.log("b");
+    if (this.isLeaf(node!)) return 1;
 
-    this.countLeaves(startNode?.leftChild!);
-    this.countLeaves(startNode?.rightChild!);
-    return this.leafCount++;
+    return (
+      this.countLeaves(node?.leftChild!) + this.countLeaves(node?.rightChild!)
+    );
   }
 
   *[Symbol.iterator](): IterableIterator<{
