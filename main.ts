@@ -26,7 +26,8 @@ class Main {
 
     // console.log(tree.getNodesAtKDist(3));
 
-    console.log(tree.areSibling(14, 6));
+    console.log(tree.areSibling(10, 24));
+    console.log(tree.getAncestors(3));
 
     console.log([...tree]);
   }

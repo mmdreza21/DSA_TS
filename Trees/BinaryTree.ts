@@ -267,6 +267,57 @@ export class BinaryTree {
     return this.findParent(value1)?.value === this.findParent(value2)?.value;
   }
 
+  //this works for BST
+
+  // public getAncestors(value: number) {
+  //   const ancestors: Array<number> = [];
+  //   this.getAncestorsPr(value, this.root, ancestors);
+  //   return ancestors;
+  // }
+
+  // private getAncestorsPr(
+  //   value: number,
+  //   root: TreeNode | null,
+  //   ancestors: Array<number>
+  // ): number[] {
+  //   if (root === null) {
+  //     return [];
+  //   }
+  //   if (root.value === value) {
+  //     return ancestors;
+  //   }
+
+  //   ancestors.push(root.value);
+
+  //   const child: TreeNode | null =
+  //     value > root.value ? root.rightChild : root.leftChild;
+
+  //   return this.getAncestorsPr(value, child, ancestors);
+  // }
+  public getAncestors(value: number) {
+    const ancestors: Array<number> = [];
+    this.getAncestorsPr(value, this.root, ancestors);
+    return ancestors;
+  }
+
+  private getAncestorsPr(
+    value: number,
+    root: TreeNode | null,
+    ancestors: Array<number>
+  ): boolean {
+    if (root === null) return false;
+    if (root.value === value) return true;
+
+    ancestors.push(root.value);
+
+    const fundInLeft = this.getAncestorsPr(value, root.leftChild, ancestors);
+    const fundInRight = this.getAncestorsPr(value, root.rightChild, ancestors);
+
+    if (!(fundInLeft || fundInRight)) ancestors.pop();
+
+    return fundInLeft || fundInRight;
+  }
+
   *[Symbol.iterator](): IterableIterator<{
     value: number;
     left: number | null;
