@@ -2,7 +2,7 @@
 import readline from "readline";
 
 import { HashMap } from "./HashTables/HashMap.ts";
-import { BinaryTree } from "./Trees/BinaryTree.ts";
+import { BinaryTree } from "./Trees/BinaryTree2.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -23,11 +23,13 @@ class Main {
     tree.insert(8);
     tree.insert(24);
     tree.insert(26);
+    // tree.insert(1);
 
-    // console.log(tree.getNodesAtKDist(3));
+    console.log(tree.height());
+    console.log(tree.minForBinarySearchTree());
+    console.log(tree.min());
 
-    console.log(tree.areSibling(10, 24));
-    console.log(tree.getAncestors(3));
+    // console.log(tree.getAncestors(3));
 
     console.log([...tree]);
   }
