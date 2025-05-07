@@ -146,17 +146,17 @@ export class BinaryTree {
   public isBST(): boolean {
     if (!this.root) return false;
 
-    return this.validateBstR(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
+    return this.validateBst(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
   }
 
-  private validateBstR(root: TreeNode, min: number, max: number): boolean {
+  private validateBst(root: TreeNode, min: number, max: number): boolean {
     if (root === null) return true;
 
     if (root.value < min || root.value > max) return false;
 
     return (
-      this.validateBstR(root.leftChild!, min, root.value - 1) &&
-      this.validateBstR(root.rightChild!, root.value + 1, max)
+      this.validateBst(root.leftChild!, min, root.value - 1) &&
+      this.validateBst(root.rightChild!, root.value + 1, max)
     );
   }
 

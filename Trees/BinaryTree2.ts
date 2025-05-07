@@ -148,16 +148,41 @@ export class BinaryTree {
   }
   //pre order traversal
   private equals2(first: TreeNode | null, second: TreeNode | null): boolean {
-    return false;
+    // if (first === null && second !== null) return false;
+    // if (first !== null && second === null) return false;
+    if (first === null || second === null) return true;
+    if (first !== null && second !== null)
+      return (
+        second?.value === first?.value &&
+        this.equals2(first?.leftChild, second?.leftChild) &&
+        this.equals2(first?.rightChild, second?.rightChild)
+      );
+    else return false;
   }
 
-  public isBST() {}
+  public isBST() {
+    if (!this.root) return null;
+    return this.validateBst(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
+  }
 
-  private validateBstR(root: TreeNode, min: number, max: number) {}
+  private validateBst(
+    root: TreeNode | null,
+    min: number,
+    max: number
+  ): boolean {
+    if (root === null) return true;
+
+    if (min > root.value || max < root.value) return false;
+
+    return (
+      this.validateBst(root.leftChild, min, root.value - 1) &&
+      this.validateBst(root.rightChild, root.value + 1, max)
+    );
+  }
 
   public swapRoot() {
-    const left = this.root!.leftChild;
-    this.root!.leftChild = this.root!.rightChild;
+    const left = this.root!!.leftChild;
+    this.root!.leftChild = this.root!.rightChild!;
     this.root!.rightChild = left;
   }
 
