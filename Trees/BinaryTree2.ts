@@ -11,19 +11,118 @@ class TreeNode {
 export class BinaryTree {
   private root: TreeNode | null = null;
 
-  public insert(value: number): void {
-    // this.counter++;
+  private isLeaf(node: TreeNode | null): boolean {
+    return node !== null && node.leftChild === null && node.rightChild === null;
   }
 
-  public find(value: number) {}
+  private findParent(value: number, root?: TreeNode) {}
 
-  public traversePreOrder(root?: TreeNode | null): void {}
+  public insert(value: number): void {
+    const node = new TreeNode(value);
 
-  public traverseInOrder(root?: TreeNode | null): void {}
+    if (this.root === null) {
+      this.root = node;
+      return;
+    }
 
-  public traversePostOrder(root?: TreeNode | null): void {}
+    let current: TreeNode | null = this.root;
+    while (current) {
+      if (value < current.value) {
+        if (!current?.leftChild) {
+          current.leftChild = node;
+          break;
+        }
+        current = current.leftChild;
+      } else {
+        if (!current?.rightChild) {
+          current.rightChild = node;
+          break;
+        }
+        current = current.rightChild;
+      }
+    }
+  }
 
-  public height(root?: TreeNode) {}
+  public find(value: number): boolean {
+    let current: TreeNode | null = this.root;
+
+    while (current) {
+      if (value === current.value) {
+        return true;
+      }
+      if (value < current.value) {
+        current = current.leftChild;
+      } else {
+        current = current.rightChild;
+      }
+    }
+    return false;
+  }
+
+  public contain(value: number, root?: TreeNode | null): boolean {
+    const current = root === undefined ? this.root : root;
+
+    if (current === null) return false;
+
+    if (value === current.value) return true;
+
+    return (
+      this.contain(value, current.leftChild) ||
+      this.contain(value, current.rightChild)
+    );
+  }
+
+  public traversePreOrder(root?: TreeNode | null): void {
+    const current = root === undefined ? this.root : root;
+
+    if (current === null) return;
+
+    console.log(current.value);
+    // remember that we don't go in left node we go to left sub tree
+    this.traversePreOrder(current.leftChild);
+    // remember that we don't go in right node we go to right sub tree
+    this.traversePreOrder(current.rightChild);
+  }
+
+  public traverseInOrder(root?: TreeNode | null): void {
+    const current = root === undefined ? this.root : root;
+
+    if (current === null) return;
+
+    // remember that we don't go in left node we go to left sub tree
+    this.traversePreOrder(current.leftChild);
+    console.log(current.value);
+    // remember that we don't go in right node we go to right sub tree
+    this.traversePreOrder(current.rightChild);
+  }
+
+  public traversePostOrder(root?: TreeNode | null): void {
+    const current = root === undefined ? this.root : root;
+
+    if (current === null) return;
+
+    // remember that we don't go in left node we go to left sub tree
+    this.traversePreOrder(current.leftChild);
+    // remember that we don't go in right node we go to right sub tree
+    this.traversePreOrder(current.rightChild);
+    console.log(current.value);
+  }
+
+  public height(root?: TreeNode | null): number {
+    const current = root === undefined ? this.root : root;
+
+    if (root === null) return 0;
+
+    if (this.isLeaf(current)) return 0;
+
+    return (
+      1 +
+      Math.max(
+        this.height(current?.leftChild),
+        this.height(current?.rightChild)
+      )
+    );
+  }
 
   // O(Log n)
   public minForBinarySearchTree() {}
@@ -39,46 +138,149 @@ export class BinaryTree {
 
   private validateBstR(root: TreeNode, min: number, max: number) {}
 
-  public swapRoot() {}
+  public swapRoot() {
+    const left = this.root!.leftChild;
+    this.root!.leftChild = this.root!.rightChild;
+    this.root!.rightChild = left;
+  }
 
-  private isLeaf(node: TreeNode) {}
-
-  public getNodesAtKDist(distance: number) {}
+  public getNodesAtKDist(distance: number) {
+    const arr: Array<number> = [];
+    this.nodeAtKDistance(this.root, distance, arr);
+    return arr;
+  }
 
   private nodeAtKDistance(
     root: TreeNode | null,
     distance: number,
     arr: Array<number>
-  ) {}
+  ) {
+    if (root === null) return arr;
 
-  public traverseLevelOrder() {}
+    if (distance === 0) arr.push(root.value);
 
-  public size(root?: TreeNode) {}
+    this.nodeAtKDistance(root.leftChild, distance - 1, arr);
+    this.nodeAtKDistance(root.rightChild, distance - 1, arr);
+  }
 
-  public countLeaves(root?: TreeNode) {}
+  public traverseLevelOrder() {
+    const current = this.root;
+    for (let i = 0; i <= this.height(); i++) {
+      for (const e of this.getNodesAtKDist(i)) {
+        console.log(e);
+      }
+    }
+  }
 
-  public max(root?: TreeNode | null) {}
+  public size(root?: TreeNode | null): number {
+    const current = root === undefined ? this.root : root;
 
-  private findParent(value: number, root?: TreeNode) {}
+    if (current === null) return 0;
 
-  public areSibling(value1: number, value2: number, root?: TreeNode) {}
+    return 1 + this.size(current!.leftChild) + this.size(current!.rightChild);
+  }
+
+  public countLeaves(root?: TreeNode | null): number {
+    const current = root === undefined ? this.root : root;
+
+    if (current === null) return 0;
+
+    if (this.isLeaf(current)) return 1;
+
+    return (
+      this.countLeaves(current.leftChild) + this.countLeaves(current.rightChild)
+    );
+  }
+
+  public maxInBST(root?: TreeNode | null): number {
+    let current = root === undefined ? this.root : root;
+    if (current!.rightChild === null) return current!.value;
+
+    return this.maxInBST(current?.rightChild);
+  }
+
+  public max(root?: TreeNode | null): number {
+    let current = root === undefined ? this.root : root;
+    if (current === null) return 0;
+    if (this.isLeaf(current)) return root!.value;
+
+    const left = this.max(current!.leftChild);
+    const right = this.max(current!.rightChild);
+
+    return Math.max(Math.max(left, right), current!.value);
+  }
+
+  public areSibling(
+    first: number,
+    second: number,
+    root?: TreeNode | null
+  ): boolean {
+    const current = root === undefined ? this.root : root;
+
+    if (current === null) return false;
+
+    let areSibling: boolean = false;
+    if (current?.leftChild || current?.rightChild)
+      areSibling =
+        (current.leftChild?.value === first &&
+          current.rightChild?.value === second) ||
+        (current.rightChild?.value === first &&
+          current.leftChild?.value === second);
+
+    return (
+      areSibling ||
+      this.areSibling(first, second, current?.leftChild) ||
+      this.areSibling(first, second, current.rightChild)
+    );
+  }
 
   //this works for BST
 
-  // public getAncestors(value: number) {
-  //
+  // public getAncestors(value: number): number[] {
+  //   const arr: number[] = [];
+  //   this.getAncestorsPr(value, this.root, arr);
+  //   return arr;
   // }
 
   // private getAncestorsPr(
-  //
+  //   value: number,
+  //   root: TreeNode | null,
+  //   ancestors: Array<number>
+  // ) {
+  //   if (root === null) return [];
+
+  //   ancestors.push(root.value);
+  //   if (root.value > value) {
+  //     this.getAncestorsPr(value, root.leftChild, ancestors);
+  //   } else {
+  //     this.getAncestorsPr(value, root.rightChild, ancestors);
+  //   }
   // }
-  public getAncestors(value: number) {}
+
+  public getAncestors(value: number) {
+    const arr: number[] = [];
+    this.getAncestorsPr(value, this.root, arr);
+    return arr;
+  }
 
   private getAncestorsPr(
     value: number,
     root: TreeNode | null,
     ancestors: Array<number>
-  ) {}
+  ): boolean {
+    if (root === null) return false;
+
+    if (root.value === value) return true;
+
+    if (
+      this.getAncestorsPr(value, root.leftChild, ancestors) ||
+      this.getAncestorsPr(value, root.rightChild, ancestors)
+    ) {
+      ancestors.push(root.value);
+      return true;
+    }
+    return false;
+  }
 
   *[Symbol.iterator](): IterableIterator<{
     value: number;
