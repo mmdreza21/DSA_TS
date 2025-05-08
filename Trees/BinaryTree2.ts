@@ -15,8 +15,6 @@ export class BinaryTree {
     return node !== null && node.leftChild === null && node.rightChild === null;
   }
 
-  private findParent(value: number, root?: TreeNode) {}
-
   public insert(value: number): void {
     const node = new TreeNode(value);
 
@@ -24,17 +22,16 @@ export class BinaryTree {
       this.root = node;
       return;
     }
-
     let current: TreeNode | null = this.root;
     while (current) {
       if (value < current.value) {
-        if (!current?.leftChild) {
+        if (!current.leftChild) {
           current.leftChild = node;
           break;
         }
         current = current.leftChild;
       } else {
-        if (!current?.rightChild) {
+        if (!current.rightChild) {
           current.rightChild = node;
           break;
         }
@@ -45,11 +42,8 @@ export class BinaryTree {
 
   public find(value: number): boolean {
     let current: TreeNode | null = this.root;
-
     while (current) {
-      if (value === current.value) {
-        return true;
-      }
+      if (current.value === value) return true;
       if (value < current.value) {
         current = current.leftChild;
       } else {
@@ -64,11 +58,11 @@ export class BinaryTree {
 
     if (current === null) return false;
 
-    if (value === current.value) return true;
+    if (current?.value === value) return true;
 
     return (
-      this.contain(value, current.leftChild) ||
-      this.contain(value, current.rightChild)
+      this.contain(value, current?.leftChild) ||
+      this.contain(value, current?.rightChild)
     );
   }
 
@@ -111,7 +105,7 @@ export class BinaryTree {
   public height(root?: TreeNode | null): number {
     const current = root === undefined ? this.root : root;
 
-    if (root === null) return 0;
+    if (current === null) return 0;
 
     if (this.isLeaf(current)) return 0;
 
@@ -125,14 +119,37 @@ export class BinaryTree {
   }
 
   // O(Log n)
-  public minForBinarySearchTree() {}
+  public minForBinarySearchTree() {
+    let current = this.root;
+
+    if (this.root === null) return;
+
+    const currentVal = current?.value;
+
+    while (current?.leftChild) {
+      current = current.leftChild;
+    }
+    return current?.value;
+  }
 
   // for just a binary tree O(N)
-  public min(root?: TreeNode) {}
+  public min(root?: TreeNode | null): number {
+    const current: TreeNode | null = root === undefined ? this.root : root;
 
-  public equals(otherTree?: BinaryTree) {}
+    if (current === null) return Infinity;
+    if (this.isLeaf(current)) return current.value;
+
+    return Math.min(this.min(current.leftChild), this.min(current.rightChild));
+  }
+
+  public equals(otherTree?: BinaryTree): boolean {
+    if (!otherTree) return false;
+    return this.equals2(this.root, otherTree.root);
+  }
   //pre order traversal
-  private equals2(first: TreeNode | null, second: TreeNode | null) {}
+  private equals2(first: TreeNode | null, second: TreeNode | null): boolean {
+    return false;
+  }
 
   public isBST() {}
 
