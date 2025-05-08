@@ -104,6 +104,15 @@ export class CArray<T extends string | number> {
     return result;
   }
 
+  public reverse2(): Array<string | number> {
+    const result = new Array(this.size);
+
+    for (let i = 0; i < this.size; i++) {
+      result[i] = result[this.size - i - 1];
+    }
+    return result;
+  }
+
   /**
    * Inserts an item at the specified index
    * @param item - The item to insert
