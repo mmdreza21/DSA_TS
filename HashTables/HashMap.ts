@@ -87,3 +87,15 @@ export class HashMap {
     }
   }
 }
+
+// const mmd = {
+//   title: "mmdreza",
+//   job: "programer",
+//   age: 26,
+// };
+
+// const mmd2 = [
+//   { k: "title", val: "mmdreza" },
+//   { key: "job", val: "programer" },
+//   { key: " age", val: 26 },
+// ];

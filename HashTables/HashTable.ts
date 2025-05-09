@@ -50,7 +50,7 @@ export class HashTable {
     this.getBucket(k).remove(entry);
   }
 
-  private getBucket(k: number) {
+  private getBucket(k: number): LinkedList<Entry> {
     return this.entries[this.hash(k)];
   }
 
@@ -60,6 +60,7 @@ export class HashTable {
 
     return this.entries[index];
   }
+
   private getEntry(k: number) {
     let bucket = this.getBucket(k);
     if (bucket) for (const entry of bucket) if (entry.key === k) return entry;

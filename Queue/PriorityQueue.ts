@@ -8,6 +8,17 @@ export class PriorityQueue {
     this.queue = new Array(size);
   }
 
+  private shiftItemsToInsert(item: number): number {
+    let i;
+    for (i = this.count - 1; i >= 0; i--) {
+      const current = this.queue[i];
+      if (item < current) {
+        this.queue[i + 1] = current;
+      } else break;
+    }
+    return i + 1;
+  }
+
   enqueue(item: number): void {
     if (this.isFull()) throw new Error("IllegalStateException");
 
@@ -22,17 +33,6 @@ export class PriorityQueue {
     this.queue[i] = item;
 
     this.count++;
-  }
-
-  private shiftItemsToInsert(item: number): number {
-    let i;
-    for (i = this.count - 1; i >= 0; i--) {
-      const current = this.queue[i];
-      if (item < current) {
-        this.queue[i + 1] = current;
-      } else break;
-    }
-    return i + 1;
   }
 
   dequeue(): number | undefined {

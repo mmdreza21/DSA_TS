@@ -106,7 +106,7 @@ dist
 
 # Local History for Visual Studio Code
 .history/
-mosh
+/mosh
 # Built files
 dist/
 build/
