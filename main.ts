@@ -19,16 +19,15 @@ class Main {
     tree.insert(30);
     tree.insert(14);
     tree.insert(6);
+    debugger;
     tree.insert(3);
     tree.insert(8);
     tree.insert(24);
-    tree.insert(26);
-    tree.insert(15);
-    tree.insert(12);
-    tree.insert(2);
-    tree.insert(100);
-
-    console.log(tree.getAncestors(2));
+    // tree.insert(26);
+    // tree.insert(15);
+    // tree.insert(12);
+    // tree.insert(2);
+    // tree.insert(100);
 
     console.log([...tree]);
   }
