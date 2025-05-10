@@ -11,7 +11,7 @@ class AVLNode {
 export class AVLTree {
   private root: AVLNode | null = null;
 
-  public insert(value: number, root: AVLNode | null) {
+  public insert(value: number, root?: AVLNode | null) {
     const node = new AVLNode(value);
     const current = root === undefined ? this.root : root;
 
