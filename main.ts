@@ -2,7 +2,7 @@
 import readline from "readline";
 
 import { HashMap } from "./HashTables/HashMap.ts";
-import { BinaryTree } from "./Trees/BinaryTree2.ts";
+import { AVLTree } from "./Trees/AVLTree.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const tree = new BinaryTree();
+    const tree = new AVLTree();
 
     // Build first tree
     tree.insert(20);
