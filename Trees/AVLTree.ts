@@ -22,10 +22,69 @@ export class AVLTree {
     if (value < root!.value) root.leftChild = this.add(value, root!.leftChild);
     else root.rightChild = this.add(value, root!.rightChild);
 
+    this.setHeight(root);
+
+    return this.balance(root);
+  }
+
+  private setHeight(root: AVLNode) {
     root.height =
-      Math.max(root.leftChild?.height ?? 0, root.rightChild?.height ?? 0) + 1;
+      Math.max(this.height(root.leftChild), this.height(root.rightChild)) + 1;
+  }
+
+  private balance(root: AVLNode): AVLNode {
+    if (this.isLeftHeavy(root)) {
+      if (root.leftChild && this.balanceFactor(root.leftChild) < 0)
+        root.leftChild = this.LeftRotate(root.leftChild);
+
+      return this.rightRotate(root);
+    }
+    if (this.isRightHeavy(root)) {
+      if (root.rightChild && this.balanceFactor(root.rightChild) > 0)
+        root.rightChild = this.rightRotate(root.rightChild);
+
+      return this.LeftRotate(root);
+    }
 
     return root;
+  }
+
+  private LeftRotate(root: AVLNode | null) {
+    if (!root || !root.rightChild) throw new Error("give me the root!");
+    const newRoot = root.rightChild;
+    root.rightChild = newRoot?.leftChild ?? null;
+    newRoot.leftChild = root;
+
+    this.setHeight(root);
+    this.setHeight(newRoot);
+
+    return newRoot;
+  }
+
+  private rightRotate(root: AVLNode | null) {
+    if (!root || !root.leftChild) throw new Error("give me the root!");
+    const newRoot = root.leftChild;
+    root.leftChild = newRoot?.rightChild ?? null;
+    newRoot.rightChild = root;
+    this.setHeight(root);
+    this.setHeight(newRoot);
+    return newRoot;
+  }
+
+  private balanceFactor(node: AVLNode): number {
+    return this.height(node.leftChild) - this.height(node.rightChild);
+  }
+
+  private isLeftHeavy(node: AVLNode): boolean {
+    return this.balanceFactor(node) > 1;
+  }
+
+  private isRightHeavy(node: AVLNode): boolean {
+    return this.balanceFactor(node) < -1;
+  }
+
+  private height(node: AVLNode | null): number {
+    return node?.height ?? -1;
   }
 
   *[Symbol.iterator](): IterableIterator<{
