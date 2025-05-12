@@ -1,3 +1,5 @@
+import { AVLTree } from "./AVLTree.ts";
+
 class TreeNode {
   public value: number;
   public leftChild: TreeNode | null = null;
@@ -322,6 +324,37 @@ export class BinaryTree {
       return true;
     }
     return false;
+  }
+
+  public isBalanced(tree: BinaryTree): boolean {
+    return this.checkBalanced(tree.root);
+  }
+  private checkBalanced(root: TreeNode | null): boolean {
+    if (root === null) return true;
+
+    const balanceFactor =
+      this.height(root.leftChild) - this.height(root.rightChild);
+
+    return (
+      Math.abs(balanceFactor) <= 1 &&
+      this.checkBalanced(root.leftChild) &&
+      this.checkBalanced(root.rightChild)
+    );
+  }
+
+  public isPerfect(): boolean {
+    const height = this.height();
+    const size = this.size();
+    if (height % 2 === 0) {
+      return height * height + height * height - 1 === size;
+    }
+    console.log(height, size);
+
+    return height * height + height * 2 === size;
+
+    // console.log(Math.pow(5, 2) + Math.pow(5, 2) - 1);
+
+    // return Math.pow(2, height + 1) - 1 === size;
   }
 
   *[Symbol.iterator](): IterableIterator<{
