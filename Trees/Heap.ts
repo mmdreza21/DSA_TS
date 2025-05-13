@@ -1,39 +1,67 @@
 export class Heap {
   private heap: Array<number>;
   counter: number = 0;
-  constructor() {
-    this.heap = new Array<number>();
+  capacity: number = 10;
+  constructor(capacity: number = 10) {
+    this.heap = new Array<number>(capacity);
+    this.capacity = capacity;
   }
 
   public insert(value: number) {
+    if (this.isFull()) {
+      throw new Error("Heap is full");
+    }
+
     this.heap[this.counter++] = value;
 
-    if (this.counter === 1) return;
+    this.bubbleUp();
+  }
 
-    let currentIndex = this.counter;
+  public remove() {
+    this.swap(0, this.counter - 1);
+    this.heap[this.counter--] = 0;
+    this.bubbleDown();
+  }
 
-    while (this.heap[currentIndex] < this.getParent(currentIndex)) {
-      currentIndex = this.bubbleUp(currentIndex);
+  public isFull() {
+    return this.counter === this.capacity;
+  }
+
+  private bubbleUp() {
+    let index = this.counter - 1;
+    while (index > 0 && this.heap[index] > this.heap[this.parent(index)]) {
+      this.swap(index, this.parent(index));
+      index = this.parent(index);
+    }
+  }
+  private bubbleDown() {
+    let index = 0;
+    this.heap[this.left(index)] > this.heap[this.right(index)]
+      ? (index = this.heap[this.left(index)])
+      : (index = this.heap[this.right(index)]);
+    let child = this.heap[index];
+
+    while (this.heap[index] > this.heap[this.parent(index)]) {
+      this.swap(index, this.parent(index));
+      index = this.parent(index);
     }
   }
 
-  private bubbleUp(index: number) {
-    const parentIndex = this.getParent(index);
-    const parent = this.heap[parentIndex];
-    this.heap[parentIndex] = this.heap[index];
-    this.heap[index] = parent;
-    console.log(parent);
-
-    return parentIndex;
+  private left(index: number): number {
+    return index * 2 + 1;
   }
-  private bubbleDown() {
-    console.log("this.bubbleDown");
+  private right(index: number): number {
+    return index * 2 + 2;
   }
 
-  private getParent(index: number) {
-    console.log(this.heap[(index - 1) / 2], this.heap[index]);
+  private swap(first: number, second: number) {
+    const temp = this.heap[first];
+    this.heap[first] = this.heap[second];
+    this.heap[second] = temp;
+  }
 
-    return this.heap[(index - 1) / 2];
+  private parent(index: number) {
+    return Math.floor((index - 1) / 2);
   }
 
   *[Symbol.iterator](): IterableIterator<number> {

@@ -17,6 +17,7 @@ class Main {
     heap.insert(10);
     heap.insert(4);
     heap.insert(15);
+    heap.insert(22);
     // heap.insert(3);
 
     console.log([...heap]);
