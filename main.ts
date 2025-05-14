@@ -18,6 +18,10 @@ class Main {
     heap.insert(4);
     heap.insert(15);
     heap.insert(22);
+
+    heap.remove();
+    heap.remove();
+    heap.remove();
     // heap.insert(3);
 
     console.log([...heap]);
