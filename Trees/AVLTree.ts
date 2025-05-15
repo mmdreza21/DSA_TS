@@ -51,6 +51,7 @@ export class AVLTree {
 
   private LeftRotate(root: AVLNode | null) {
     if (!root || !root.rightChild) throw new Error("give me the root!");
+
     const newRoot = root.rightChild;
     root.rightChild = newRoot?.leftChild ?? null;
     newRoot.leftChild = root;
@@ -63,9 +64,11 @@ export class AVLTree {
 
   private rightRotate(root: AVLNode | null) {
     if (!root || !root.leftChild) throw new Error("give me the root!");
+
     const newRoot = root.leftChild;
     root.leftChild = newRoot?.rightChild ?? null;
     newRoot.rightChild = root;
+
     this.setHeight(root);
     this.setHeight(newRoot);
     return newRoot;

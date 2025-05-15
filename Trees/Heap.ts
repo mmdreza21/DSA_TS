@@ -56,6 +56,7 @@ export class Heap {
   private largerChildIndex(index: number): number {
     if (!this.hasLeftChild(index)) return index;
     if (!this.hasRightChild(index)) return index;
+
     return this.leftChild(index) > this.rightChild(index)
       ? (index = this.leftIndex(index))
       : (index = this.rightIndex(index));
@@ -86,21 +87,21 @@ export class Heap {
     return this.items[this.rightIndex(index)];
   }
 
+  //
   private leftIndex(index: number): number {
     return index * 2 + 1;
   }
   private rightIndex(index: number): number {
     return index * 2 + 2;
   }
-
+  private parent(index: number) {
+    return Math.floor((index - 1) / 2);
+  }
+  //
   private swap(first: number, second: number) {
     const temp = this.items[first];
     this.items[first] = this.items[second];
     this.items[second] = temp;
-  }
-
-  private parent(index: number) {
-    return Math.floor((index - 1) / 2);
   }
 
   *[Symbol.iterator](): IterableIterator<number> {

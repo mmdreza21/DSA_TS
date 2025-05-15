@@ -12,19 +12,19 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const heap = new Heap();
-    heap.insert(20);
-    heap.insert(10);
-    heap.insert(4);
-    heap.insert(15);
-    heap.insert(22);
-
-    heap.remove();
-    heap.remove();
-    heap.remove();
+    const tree = new BinaryTree();
     // heap.insert(3);
+    tree.insert(3);
+    tree.insert(6);
+    tree.insert(7);
+    tree.insert(10);
+    tree.insert(2);
+    tree.insert(4);
+    tree.insert(5);
 
-    console.log([...heap]);
+    console.log(tree.min());
+
+    console.log([...tree]);
   }
 }
 

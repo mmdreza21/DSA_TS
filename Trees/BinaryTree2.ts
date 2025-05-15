@@ -141,7 +141,10 @@ export class BinaryTree {
     if (current === null) return Infinity;
     if (this.isLeaf(current)) return current.value;
 
-    return Math.min(this.min(current.leftChild), this.min(current.rightChild));
+    const left = this.min(current.leftChild);
+    const right = this.min(current.rightChild);
+
+    return Math.min(Math.min(left, right), current.value);
   }
 
   public equals(otherTree?: BinaryTree): boolean {
@@ -345,16 +348,16 @@ export class BinaryTree {
   public isPerfect(): boolean {
     const height = this.height();
     const size = this.size();
-    if (height % 2 === 0) {
-      return height * height + height * height - 1 === size;
-    }
-    console.log(height, size);
+    // if (height % 2 === 0) {
+    //   return height * height + height * height - 1 === size;
+    // }
+    // console.log(height, size);
 
-    return height * height + height * 2 === size;
+    // return height * height + height * 2 === size;
 
     // console.log(Math.pow(5, 2) + Math.pow(5, 2) - 1);
 
-    // return Math.pow(2, height + 1) - 1 === size;
+    return Math.pow(2, height + 1) - 1 === size;
   }
 
   *[Symbol.iterator](): IterableIterator<{
