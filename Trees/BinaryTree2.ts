@@ -156,6 +156,7 @@ export class BinaryTree {
     // if (first === null && second !== null) return false;
     // if (first !== null && second === null) return false;
     if (first === null || second === null) return true;
+
     if (first !== null && second !== null)
       return (
         second?.value === first?.value &&
