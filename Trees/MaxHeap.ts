@@ -8,27 +8,26 @@ export class MaxHeap {
   // }
 
   public static heapify(array: Array<number>) {
+    const heapifyRecursive = (array: number[], index: number) => {
+      let largerIndex = index;
+
+      let leftIndex = index * 2 + 1;
+      if (leftIndex < array.length && array[leftIndex] > array[largerIndex])
+        largerIndex = leftIndex;
+      let rightIndex = index * 2 + 2;
+      if (rightIndex < array.length && array[rightIndex] > array[largerIndex])
+        largerIndex = rightIndex;
+
+      if (index === largerIndex) return;
+
+      this.swap(index, largerIndex, array);
+      heapifyRecursive(array, largerIndex);
+    };
+
     const lastParentIndex = array.length / 2 - 1;
     for (let i = lastParentIndex; i >= 0; i--) {
-      const element = array[i];
-      this.heapify2(array, i);
+      heapifyRecursive(array, i);
     }
-  }
-
-  private static heapify2(array: number[], index: number) {
-    let largerIndex = index;
-
-    let leftIndex = index * 2 + 1;
-    if (leftIndex < array.length && array[leftIndex] > array[largerIndex])
-      largerIndex = leftIndex;
-    let rightIndex = index * 2 + 2;
-    if (rightIndex < array.length && array[rightIndex] > array[largerIndex])
-      largerIndex = rightIndex;
-
-    if (index === largerIndex) return;
-
-    this.swap(index, largerIndex, array);
-    this.heapify2(array, largerIndex);
   }
 
   private static swap(first: number, second: number, array: number[]) {
@@ -51,22 +50,21 @@ export class MaxHeap {
   public static isMaxHeap(array: number[]) {
     const lastParentIndex = array.length / 2 - 1;
     let isMaxHeap = false;
+    const checkMaxHeap = (array: number[], index: number) => {
+      let largerIndex = index;
+
+      let leftIndex = index * 2 + 1;
+      if (leftIndex < array.length && array[leftIndex] > array[largerIndex])
+        return false;
+      let rightIndex = index * 2 + 2;
+      if (rightIndex < array.length && array[rightIndex] > array[largerIndex])
+        return false;
+
+      return true;
+    };
     for (let i = array.length / 2 - 1; i >= 0; i--) {
-      isMaxHeap = this.isMaxHeap2(array, i);
+      isMaxHeap = checkMaxHeap(array, i);
     }
     return isMaxHeap;
-  }
-
-  private static isMaxHeap2(array: number[], index: number) {
-    let largerIndex = index;
-
-    let leftIndex = index * 2 + 1;
-    if (leftIndex < array.length && array[leftIndex] > array[largerIndex])
-      return false;
-    let rightIndex = index * 2 + 2;
-    if (rightIndex < array.length && array[rightIndex] > array[largerIndex])
-      return false;
-
-    return true;
   }
 }
