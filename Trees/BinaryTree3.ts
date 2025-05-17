@@ -213,17 +213,49 @@ export class BinaryTree {
   public areSibling(
     first: number,
     second: number,
-    root?: TreeNode | null
-  ): boolean {}
+    root: TreeNode | null = this.root
+  ): boolean {
+    if (root === null) return false;
 
-  // public getAncestors(value: number) {}
+    let areSibling: boolean = false;
+    if (root?.leftChild || root?.rightChild)
+      areSibling =
+        (root.leftChild?.value === first &&
+          root.rightChild?.value === second) ||
+        (root.rightChild?.value === first && root.leftChild?.value === second);
 
-  // private getAncestorsPr(
-  //   value: number,
-  //   root: TreeNode | null,
-  //   ancestors: Array<number>
-  // ): boolean {}
+    return (
+      areSibling ||
+      this.areSibling(first, second, root.leftChild) ||
+      this.areSibling(first, second, root.rightChild)
+    );
+  }
 
+  public getAncestors(value: number) {
+    const find = (
+      value: number,
+      root: TreeNode | null,
+      ancestors: Array<number>
+    ): boolean => {
+      if (root === null) return false;
+
+      if (root.value === value) return true;
+
+      if (
+        find(value, root.leftChild, ancestors) ||
+        find(value, root.rightChild, ancestors)
+      ) {
+        ancestors.push(root.value);
+        return true;
+      }
+      return false;
+    };
+
+    const list: number[] = [];
+    find(value, this.root, list);
+
+    return list;
+  }
   // public isBalanced(tree: BinaryTree): boolean {}
   // private checkBalanced(root: TreeNode | null): boolean {}
 

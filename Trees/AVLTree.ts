@@ -13,23 +13,26 @@ export class AVLTree {
   private root: AVLNode | null = null;
 
   public insert(value: number) {
-    this.root = this.add(value, this.root);
-  }
+    const add = (value: number, root: AVLNode | null): AVLNode => {
+      if (root === null) return new AVLNode(value);
 
-  private add(value: number, root: AVLNode | null): AVLNode {
-    if (root === null) return new AVLNode(value);
+      if (value < root!.value) root.leftChild = add(value, root!.leftChild);
+      else root.rightChild = add(value, root!.rightChild);
 
-    if (value < root!.value) root.leftChild = this.add(value, root!.leftChild);
-    else root.rightChild = this.add(value, root!.rightChild);
+      this.setHeight(root);
 
-    this.setHeight(root);
-
-    return this.balance(root);
+      return this.balance(root);
+    };
+    this.root = add(value, this.root);
   }
 
   private setHeight(root: AVLNode) {
     root.height =
       Math.max(this.height(root.leftChild), this.height(root.rightChild)) + 1;
+  }
+
+  private height(node: AVLNode | null): number {
+    return node?.height ?? -1;
   }
 
   private balance(root: AVLNode): AVLNode {
@@ -84,10 +87,6 @@ export class AVLTree {
 
   private isRightHeavy(node: AVLNode): boolean {
     return this.balanceFactor(node) < -1;
-  }
-
-  private height(node: AVLNode | null): number {
-    return node?.height ?? -1;
   }
 
   *[Symbol.iterator](): IterableIterator<{
