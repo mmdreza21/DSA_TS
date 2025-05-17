@@ -5,6 +5,7 @@ import { AVLTree } from "./Trees/AVLTree.ts";
 import { BinaryTree } from "./Trees/BinaryTree2.ts";
 import { Heap } from "./Trees/Heap.ts";
 import { MaxHeap } from "./Trees/MaxHeap.ts";
+import { MinHeap } from "./Trees/MinHeap.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -15,13 +16,15 @@ class Main {
   constructor() {
     const arr = [5, 3, 8, 4, 1, 2];
 
-    console.log(MaxHeap.kthMaxNode(arr, 1));
-    console.log(MaxHeap.isMaxHeap(arr));
+    const minHeap = new MinHeap();
 
-    const heapify = MaxHeap.heapify(arr);
-    console.log(MaxHeap.isMaxHeap(arr));
-
-    console.log(arr);
+    minHeap.insert(5, "hasan");
+    minHeap.insert(6, "mammad");
+    minHeap.insert(4, "abas");
+    minHeap.insert(3, "ali");
+    minHeap.insert(1, "ali");
+    console.log(minHeap.remove());
+    console.log([...minHeap]);
   }
 }
 
