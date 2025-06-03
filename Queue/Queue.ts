@@ -48,7 +48,7 @@ export class Queue<T> {
   }
 
   peek(): T | undefined {
-    if (this.counter == 0) return undefined;
+    if (this.counter === 0) return undefined;
     return this.queue[this.front];
   }
 

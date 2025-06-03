@@ -6,6 +6,7 @@ import { BinaryTree } from "./Trees/BinaryTree2.ts";
 import { Heap } from "./Trees/Heap.ts";
 import { MaxHeap } from "./Trees/MaxHeap.ts";
 import { MinHeap } from "./Trees/MinHeap.ts";
+import { LinkedListQueue } from "./Queue/LinkedListQueue.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -14,17 +15,15 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const arr = [5, 3, 8, 4, 1, 2];
+    const linkedListQue = new LinkedListQueue();
+    linkedListQue.enqueue(5);
+    linkedListQue.enqueue(4);
+    linkedListQue.enqueue(3);
+    console.log("asddd");
+    console.log([...linkedListQue]);
 
-    const minHeap = new MinHeap();
-
-    minHeap.insert(5, "hasan");
-    minHeap.insert(6, "mammad");
-    minHeap.insert(4, "abas");
-    minHeap.insert(3, "ali");
-    minHeap.insert(1, "ali");
-    console.log(minHeap.remove());
-    console.log([...minHeap]);
+    console.log(linkedListQue.dequeue());
+    console.log([...linkedListQue]);
   }
 }
 

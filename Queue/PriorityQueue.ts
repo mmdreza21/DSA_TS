@@ -22,13 +22,6 @@ export class PriorityQueue {
   enqueue(item: number): void {
     if (this.isFull()) throw new Error("IllegalStateException");
 
-    // let insertIndex = this.count;
-    // while (insertIndex > 0 && item < this.queue[insertIndex - 1]) {
-    //   this.queue[insertIndex] = this.queue[insertIndex - 1];
-    //   insertIndex--;
-    // }
-    // this.queue[insertIndex] = item;
-
     const i = this.shiftItemsToInsert(item);
     this.queue[i] = item;
 
