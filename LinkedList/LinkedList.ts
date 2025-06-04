@@ -46,7 +46,8 @@ export class LinkedList<T> {
   /**
    * deleteFirst: delete the first item in the linkedList
    */
-  public deleteFirst(): void | null {
+  public deleteFirst(): T | undefined {
+    const first = this.first;
     if (this.isEmpty) throw new Error("linkedList is empty!");
     if (this.first === this.last) this.first = this.last = null;
     else {
@@ -55,6 +56,7 @@ export class LinkedList<T> {
       this.first = second;
     }
     this.size--;
+    return first?.value;
   }
 
   private getPrevious(node: ListNode<T>) {

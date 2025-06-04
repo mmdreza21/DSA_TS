@@ -28,6 +28,11 @@ export class Heap {
     return root;
   }
 
+  public max(): number {
+    if (this.isEmpty()) throw new Error("heap is empty!");
+    return this.items[0];
+  }
+
   public isFull() {
     return this.size === this.capacity;
   }

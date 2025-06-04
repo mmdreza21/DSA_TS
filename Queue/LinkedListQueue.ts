@@ -1,31 +1,43 @@
 import { LinkedList } from "../LinkedList/LinkedList.ts";
+class QueueNode {
+  public next: QueueNode | null = null;
+  public value: number;
+  constructor(val: number) {
+    this.value = val;
+  }
+}
 
 export class LinkedListQueue {
-  private queue: LinkedList<number>;
+  private head: QueueNode | null = null;
+  private tail: QueueNode | null = null;
   private counter: number = 0;
 
-  constructor() {
-    this.queue = new LinkedList();
-  }
-
   enqueue(item: number): void {
-    this.queue.addLast(item);
+    const node = new QueueNode(item);
+    if (this.isEmpty()) this.head = this.tail = node;
+    else {
+      this.tail!.next = node;
+      this.tail = node;
+    }
     this.counter++;
   }
 
   dequeue(): number | undefined {
-    if (this.counter === 0) throw new Error("Q is empty");
-    const val = this.queue.front?.value;
-    // const val = this.queue.getKThFromEnd(this.counter);
-    this.queue.deleteFirst();
+    if (this.isEmpty()) throw new Error("the Queue is Empty");
+
+    const val = this.head?.value;
+    if (this.head === this.tail) {
+      this.head = this.tail = null;
+    } else {
+      const second = this.head!.next;
+      this.head!.next = null;
+      this.head = second;
+    }
     this.counter--;
     return val;
   }
 
-  peek(): number | undefined {
-    if (this.counter == 0) return undefined;
-    return this.queue.front?.value;
-  }
+  // peek(): number | undefined {}
 
   isEmpty(): boolean {
     return this.counter === 0;
@@ -35,7 +47,11 @@ export class LinkedListQueue {
     return this.counter;
   }
 
-  print() {
-    console.log("[", [...this.queue].join(" -> "), "]");
+  *[Symbol.iterator](): IterableIterator<number> {
+    let current = this.head;
+    while (current !== null) {
+      yield current.value;
+      current = current.next;
+    }
   }
 }

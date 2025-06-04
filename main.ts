@@ -11,17 +11,12 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const tree = new AVLTree();
-    // heap.insert(3);
-    tree.insert(3);
-    tree.insert(6);
-    tree.insert(7);
-    tree.insert(10);
-    tree.insert(2);
-    // tree.insert(2.5);
-    tree.insert(1);
-    tree.insert(4);
-    tree.insert(5);
+    const linkedListQue = new LinkedListQueue();
+    linkedListQue.enqueue(5);
+    linkedListQue.enqueue(4);
+    linkedListQue.enqueue(3);
+    console.log("asddd");
+    console.log([...linkedListQue]);
 
     const s = new Stack<string>(8);
 

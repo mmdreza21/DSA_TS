@@ -21,10 +21,6 @@ export class HashTable {
     this.entries = new Array<LinkedList<Entry>>(size);
   }
 
-  private hash(key: number) {
-    return key % this.capacity;
-  }
-
   public put(k: number, v: string) {
     if (this.count >= this.capacity) throw new Error("the Hash table is full");
 
@@ -48,6 +44,10 @@ export class HashTable {
     const entry = this.getEntry(k);
     if (!entry) throw new Error("the givin key is invalid!");
     this.getBucket(k).remove(entry);
+  }
+
+  private hash(key: number) {
+    return key % this.capacity;
   }
 
   private getBucket(k: number): LinkedList<Entry> {
