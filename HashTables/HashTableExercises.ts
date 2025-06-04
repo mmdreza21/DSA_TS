@@ -63,10 +63,14 @@ export class HashTableExercises {
       if (numMap.has(complement)) {
         return [numMap.get(complement)!, i];
       }
+      console.log("no", nums[i], i);
+
       numMap.set(nums[i], i);
     }
     console.log(numMap);
 
     return null;
   }
+
+  // todo  find dose a string has it reverse in the array like  ['ab', 'cd' , 'ba','ef','gl']
 }

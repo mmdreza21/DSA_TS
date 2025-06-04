@@ -2,7 +2,7 @@ export class CharFinder {
   constructor() {}
 
   public firstNoneRepeatingChar(str: string) {
-    if (str.length < 1) throw new Error("the string cant be empty");
+    if (str.length < 1) throw new Error("the string can't be empty");
 
     const map = new Map<string, number>();
 
@@ -21,6 +21,7 @@ export class CharFinder {
 
     return mmd;
   }
+
   public myFirstNoneRepeatingChar(str: string) {
     if (str.length < 1) throw new Error("the string cant be empty");
 

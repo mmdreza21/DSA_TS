@@ -3,6 +3,8 @@ import readline from "readline";
 
 import { AVLTree } from "./Trees/AVLTree.ts";
 import { Stack } from "./Stack/Stack.ts";
+import { LinkedListQueue } from "./Queue/LinkedListQueue.ts";
+import { HashTableExercises } from "./HashTables/HashTableExercises.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -11,17 +13,8 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const linkedListQue = new LinkedListQueue();
-    linkedListQue.enqueue(5);
-    linkedListQue.enqueue(4);
-    linkedListQue.enqueue(3);
-    console.log("asddd");
-    console.log([...linkedListQue]);
-
-    const s = new Stack<string>(8);
-
-    s.mmd("ali");
-    console.log(s);
+    const h = new HashTableExercises();
+    console.log(h.twoSum([1, 7, 6, 5, 4, 3], 9));
   }
 }
 
