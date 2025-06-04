@@ -2,6 +2,7 @@
 import readline from "readline";
 
 import { AVLTree } from "./Trees/AVLTree.ts";
+import { Stack } from "./Stack/Stack.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -22,7 +23,10 @@ class Main {
     tree.insert(4);
     tree.insert(5);
 
-    console.log([...tree]);
+    const s = new Stack<string>(8);
+
+    s.mmd("ali");
+    console.log(s);
   }
 }
 

@@ -44,6 +44,10 @@ export class Stack<T> {
     return this.size === this.capacity;
   }
 
+  mmd(item: T) {
+    this.stack[-1] = item;
+  }
+
   /**
    * @returns min member of the stack
    */

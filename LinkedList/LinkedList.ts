@@ -163,6 +163,25 @@ export class LinkedList<T> {
     this.last = this.first;
     this.first = prev;
   }
+
+  //   public rev(): void {
+  //     if (this.isEmpty) return;
+
+  //     let c = this.first;
+  //     let p = null;
+
+  //     while (c) {
+  //       const next = c.next;
+  //       c.next = p;
+
+  //       p = c;
+  //       c = next;
+  //     }
+  // this.last= this.first
+  // this.first=p
+
+  //   }
+
   // mosh' solution --- mine is better
   // let current = this.first?.next;
   // let prev = this.first;
