@@ -107,7 +107,7 @@ export class BinaryTree {
   }
 
   public equals(otherTree: BinaryTree): boolean {
-    const recursiveEquals = (
+    const equals = (
       first: TreeNode | null,
       second: TreeNode | null
     ): boolean => {
@@ -118,14 +118,14 @@ export class BinaryTree {
       if (second !== null && first !== null)
         return (
           first.value === second.value &&
-          recursiveEquals(first.leftChild, second.leftChild) &&
-          recursiveEquals(first.rightChild, second.rightChild)
+          equals(first.leftChild, second.leftChild) &&
+          equals(first.rightChild, second.rightChild)
         );
       else return false;
     };
     console.log([...otherTree]);
 
-    return recursiveEquals(this.root, otherTree.root);
+    return equals(this.root, otherTree.root);
   }
 
   public isBST(): boolean {
@@ -232,7 +232,7 @@ export class BinaryTree {
   }
 
   public getAncestors(value: number) {
-    const find = (
+    const getAncestors = (
       value: number,
       root: TreeNode | null,
       ancestors: Array<number>
@@ -242,8 +242,8 @@ export class BinaryTree {
       if (root.value === value) return true;
 
       if (
-        find(value, root.leftChild, ancestors) ||
-        find(value, root.rightChild, ancestors)
+        getAncestors(value, root.leftChild, ancestors) ||
+        getAncestors(value, root.rightChild, ancestors)
       ) {
         ancestors.push(root.value);
         return true;
@@ -252,14 +252,32 @@ export class BinaryTree {
     };
 
     const list: number[] = [];
-    find(value, this.root, list);
+    getAncestors(value, this.root, list);
 
     return list;
   }
-  // public isBalanced(tree: BinaryTree): boolean {}
-  // private checkBalanced(root: TreeNode | null): boolean {}
+  public isBalanced(tree: BinaryTree): boolean {
+    const isBalanced = (root: TreeNode | null): boolean => {
+      if (root === null) return false;
 
-  // public isPerfect(): boolean {}
+      const balanceFactor =
+        this.height(root.leftChild) - this.height(root.rightChild);
+
+      return (
+        Math.abs(balanceFactor) >= 1 &&
+        isBalanced(root.leftChild) &&
+        isBalanced(root.rightChild)
+      );
+    };
+    return isBalanced(tree.root);
+  }
+
+  public isPerfect(): boolean {
+    const height = this.height();
+    const size = this.size();
+
+    return Math.pow(2, height + 1) - 1 === size;
+  }
 
   *[Symbol.iterator](): IterableIterator<{
     value: number;
