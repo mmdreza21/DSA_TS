@@ -66,6 +66,7 @@ export class HashMap {
 
     const existingIndex = this.getIndex(k);
     if (!existingIndex || existingIndex === -1) return undefined;
+
     this.entries[existingIndex] = undefined;
     this.count--;
   }

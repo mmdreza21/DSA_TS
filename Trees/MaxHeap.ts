@@ -67,4 +67,25 @@ export class MaxHeap {
     }
     return isMaxHeap;
   }
+
+  public static isMinHeap(array: Array<number>) {
+    let minHeap: boolean = false;
+    const isMinHeap = (array: number[], index: number): boolean => {
+      const largerIndex = index;
+
+      const leftIndex = index * 2 + 1;
+      if (leftIndex < array.length && array[leftIndex] < array[largerIndex])
+        return false;
+      const rightIndex = index * 2 + 1;
+      if (rightIndex < array.length && array[rightIndex] < array[largerIndex])
+        return false;
+
+      return true;
+    };
+
+    for (let i = array.length / 2 - 1; i >= 0; i--)
+      minHeap = isMinHeap(array, i);
+
+    return minHeap;
+  }
 }

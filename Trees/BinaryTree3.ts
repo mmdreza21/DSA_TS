@@ -129,7 +129,7 @@ export class BinaryTree {
   }
 
   public isBST(): boolean {
-    const cheValidity = (
+    const checkValidity = (
       root: TreeNode | null,
       min: number,
       max: number
@@ -138,12 +138,12 @@ export class BinaryTree {
 
       if (min > root.value || max < root.value) return false;
       return (
-        cheValidity(root.leftChild, min, root.value + 1) &&
-        cheValidity(root.rightChild, root.value + 1, max)
+        checkValidity(root.leftChild, min, root.value + 1) &&
+        checkValidity(root.rightChild, root.value + 1, max)
       );
     };
 
-    return cheValidity(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
+    return checkValidity(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
   }
 
   public swapRoot() {
