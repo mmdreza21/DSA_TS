@@ -8,7 +8,7 @@ export class MaxHeap {
   // }
 
   public static heapify(array: Array<number>) {
-    const heapifyRecursive = (array: number[], index: number) => {
+    const heapify = (array: number[], index: number) => {
       let largerIndex = index;
 
       let leftIndex = index * 2 + 1;
@@ -21,12 +21,12 @@ export class MaxHeap {
       if (index === largerIndex) return;
 
       this.swap(index, largerIndex, array);
-      heapifyRecursive(array, largerIndex);
+      heapify(array, largerIndex);
     };
 
     const lastParentIndex = array.length / 2 - 1;
     for (let i = lastParentIndex; i >= 0; i--) {
-      heapifyRecursive(array, i);
+      heapify(array, i);
     }
   }
 

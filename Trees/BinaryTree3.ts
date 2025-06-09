@@ -20,19 +20,19 @@ export class BinaryTree {
   }
 
   public insert(value: number): void {
-    const addNode = (value: number, node: TreeNode | null): TreeNode => {
+    const insert = (value: number, node: TreeNode | null): TreeNode => {
       if (node === null) return new TreeNode(value);
 
       if (value < node.value) {
-        node.leftChild = addNode(value, node.leftChild);
+        node.leftChild = insert(value, node.leftChild);
       } else {
-        node.rightChild = addNode(value, node.rightChild);
+        node.rightChild = insert(value, node.rightChild);
       }
 
       return node;
     };
 
-    this.root = addNode(value, this.root);
+    this.root = insert(value, this.root);
   }
 
   public find(value: number): boolean {
