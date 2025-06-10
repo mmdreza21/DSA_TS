@@ -108,26 +108,41 @@ export class BinaryTree {
       first: TreeNode | null,
       second: TreeNode | null
     ): boolean => {
-      if (first?.value === second?.value) return true;
+      if (first === null && second === null) return true;
+      if (first !== null && second === null) return false;
+      if (first === null && second !== null) return false;
 
-      return (
-        equals(first!.leftChild, second!.leftChild) &&
-        equals(first!.rightChild, second!.rightChild)
-      );
+      if (second !== null && first !== null)
+        return (
+          first.value === second.value &&
+          equals(first!.leftChild, second!.leftChild) &&
+          equals(first!.rightChild, second!.rightChild)
+        );
+      else return false;
     };
     console.log([...otherTree]);
 
     return equals(this.root, otherTree.root);
   }
 
-  //   public isBST(): boolean {
-  //     const checkValidity = (
-  //       root: TreeNode | null,
-  //       min: number,
-  //       max: number
-  //     ): boolean => {
+  public isBST(): boolean {
+    const isBST = (
+      root: TreeNode | null,
+      min: number,
+      max: number
+    ): boolean => {
+      if (root === null) return true;
 
-  //   }
+      if (min > root.value || max < root.value) return false;
+
+      return (
+        isBST(root.leftChild, min, root.value + 1) &&
+        isBST(root.leftChild, root.value + 1, max)
+      );
+    };
+
+    return isBST(this.root, Number.MIN_VALUE, Number.MAX_VALUE);
+  }
 
   public swapRoot() {
     const left = this.root!.leftChild;
@@ -135,25 +150,39 @@ export class BinaryTree {
     this.root!.rightChild = left;
   }
 
-  //   public getNodesAtKDist(distance: number) {
-  //     const nodeAtKDistance = (
-  //       root: TreeNode | null,
-  //       distance: number,
-  //       list: Array<number>
-  //     ) => {
-  //     //
-  //     };
-  //     const list: number[] = [];
-  //     nodeAtKDistance(this.root, distance, list);
-  //     return list;
-  //   }
+  public getNodesAtKDist(distance: number) {
+    const nodeAtKDistance = (
+      root: TreeNode | null,
+      distance: number,
+      list: Array<number>
+    ) => {
+      if (root === null) return;
+      if (distance === 0) list.push(root.value);
 
-  //   public traverseLevelOrder() {
+      nodeAtKDistance(root.leftChild, distance - 1, list);
+      nodeAtKDistance(root.rightChild, distance - 1, list);
+    };
+    const list: number[] = [];
+    nodeAtKDistance(this.root, distance, list);
+    return list;
+  }
 
-  //   }
+  public traverseLevelOrder() {
+    const list: number[] = [];
+    for (let i = 0; i < this.height(); i++) {
+      for (const e of this.getNodesAtKDist(i)) {
+        list.push(e);
+      }
 
-  //   public size(): number {
-  //   }
+      return list;
+    }
+  }
+
+    public size(): number {
+if
+
+
+    }
 
   //   public countLeaves(): number {
 
@@ -173,25 +202,14 @@ export class BinaryTree {
 
   //   }
 
-  //   public getAncestors(value: number) {
-  //     const getAncestors = (
-  //       value: number,
-  //       root: TreeNode | null,
-  //       ancestors: Array<number>
-  //     ): boolean => {
-  //     //   if (root === null) return false;
-
-  //     //   if (root.value === value) return true;
-
-  //     //   if (
-  //     //     getAncestors(value, root.leftChild, ancestors) ||
-  //     //     getAncestors(value, root.rightChild, ancestors)
-  //     //   ) {
-  //     //     ancestors.push(root.value);
-  //     //     return true;
-  //     //   }
-  //     //   return false;
-  //     };
+  // public getAncestors(value: number) {
+  //   const getAncestors = (
+  //     value: number,
+  //     root: TreeNode | null,
+  //     ancestors: Array<number>
+  //   ): boolean => {
+  //   }
+  //   };
 
   //     const list: number[] = [];
   //     getAncestors(value, this.root, list);
