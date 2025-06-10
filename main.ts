@@ -26,6 +26,7 @@ class Main {
     tree.insert(2);
 
     console.log(tree.contain(8));
+    console.log(tree.min());
 
     console.log([...tree]);
   }

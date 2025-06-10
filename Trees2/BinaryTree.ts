@@ -84,31 +84,41 @@ export class BinaryTree {
     console.log(root.value);
   }
 
-    public height(root: TreeNode | null = this.root): number {
+  public height(root: TreeNode | null = this.root): number {
+    if (root === null) return 0;
+    if (this.isLeaf(root)) return -1;
 
-if
+    return (
+      Math.max(this.height(root.leftChild), this.height(root.rightChild)) + 1
+    );
+  }
 
-    }
+  // for just a binary tree O(N)
+  public min(root: TreeNode | null = this.root): number {
+    if (root === null) return Number.MAX_VALUE;
 
-  // // O(Log n)
-  // public minForBinarySearchTree() {}
+    const left = this.min(root.leftChild);
+    const right = this.min(root.rightChild);
 
-  // // for just a binary tree O(N)
-  //   public min(root: TreeNode | null = this.root): number {
+    return Math.min(Math.min(left, right), root.value);
+  }
 
-  //   }
+  public equals(otherTree: BinaryTree): boolean {
+    const equals = (
+      first: TreeNode | null,
+      second: TreeNode | null
+    ): boolean => {
+      if (first?.value === second?.value) return true;
 
-  //   public equals(otherTree: BinaryTree): boolean {
-  //     const equals = (
-  //       first: TreeNode | null,
-  //       second: TreeNode | null
-  //     ): boolean => {
+      return (
+        equals(first!.leftChild, second!.leftChild) &&
+        equals(first!.rightChild, second!.rightChild)
+      );
+    };
+    console.log([...otherTree]);
 
-  //     };
-  //     console.log([...otherTree]);
-
-  //     return equals(this.root, otherTree.root);
-  //   }
+    return equals(this.root, otherTree.root);
+  }
 
   //   public isBST(): boolean {
   //     const checkValidity = (
