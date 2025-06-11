@@ -178,44 +178,76 @@ export class BinaryTree {
     }
   }
 
-    public size(): number {
-if
+  public size(root: TreeNode | null = this.root): number {
+    if (root === null) return 0;
 
+    return 1 + this.size(root.leftChild) + this.size(root.rightChild);
+  }
 
-    }
+  public countLeaves(root: TreeNode | null = this.root): number {
+    if (root === null) return 0;
 
-  //   public countLeaves(): number {
+    if (this.isLeaf(root)) return 1;
 
-  //   }
+    return this.size(root.leftChild) + this.size(root.rightChild);
+  }
 
-  // public maxInBST(root?: TreeNode | null): number {}
+  public max(root: TreeNode | null = this.root): number {
+    if (root === null) return Number.MIN_VALUE;
 
-  //   public max(root: TreeNode | null = this.root): number {
+    const left = this.max(root.leftChild);
+    const right = this.max(root.rightChild);
 
-  //   }
+    return Math.max(Math.max(left, right), root.value);
+  }
 
-  //   public areSibling(
-  //     first: number,
-  //     second: number,
-  //     root: TreeNode | null = this.root
-  //   ): boolean {
+  public areSibling(
+    first: number,
+    second: number,
+    root: TreeNode | null = this.root
+  ): boolean {
+    if (root === null) return false;
 
-  //   }
+    let areSibling: boolean = false;
 
-  // public getAncestors(value: number) {
-  //   const getAncestors = (
-  //     value: number,
-  //     root: TreeNode | null,
-  //     ancestors: Array<number>
-  //   ): boolean => {
-  //   }
-  //   };
+    if (root.leftChild || root.rightChild)
+      areSibling =
+        (root.leftChild?.value === first &&
+          root.rightChild?.value === second) ||
+        (root.leftChild?.value === second && root.rightChild?.value === first);
 
-  //     const list: number[] = [];
-  //     getAncestors(value, this.root, list);
+    return (
+      areSibling ||
+      this.areSibling(first, second, root.leftChild) ||
+      this.areSibling(first, second, root.rightChild)
+    );
+  }
 
-  //     return list;
-  //   }
+  public getAncestors(value: number) {
+    const getAncestors = (
+      value: number,
+      root: TreeNode | null,
+      ancestors: Array<number>
+    ): boolean => {
+      if (root === null) return false;
+      if (root.value === value) return true;
+
+      if (
+        getAncestors(value, root.leftChild, ancestors) ||
+        getAncestors(value, root.rightChild, ancestors)
+      ) {
+        ancestors.push(root.value);
+        return true;
+      }
+
+      return false;
+    };
+
+    const list: number[] = [];
+    getAncestors(value, this.root, list);
+
+    return list;
+  }
   //   public isBalanced(tree: BinaryTree): boolean {
   //     const isBalanced = (root: TreeNode | null): boolean => {
 
