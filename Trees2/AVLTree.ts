@@ -18,8 +18,10 @@ export class AVLTree {
       if (value < root?.value) insert(value, root.leftChild);
       else insert(value, root.rightChild);
 
+      const balancedTree = this.balance(root);
+
       this.setHeight(root);
-      return root;
+      return balancedTree;
     };
 
     this.root = insert(value, this.root);
@@ -38,21 +40,43 @@ export class AVLTree {
 
   private balance(root: AVLNode): AVLNode {
     if (this.isLeftHeavy(root)) {
-    } else {
+      if (root.leftChild && this.balanceFactor(root.leftChild) < 0)
+        root.leftChild = this.LeftRotate(root.leftChild);
+      return this.rightRotate(root);
     }
+    if (this.isRightHeavy(root)) {
+      if (root.rightChild && this.balanceFactor(root.rightChild) > 0)
+        root.rightChild = this.rightRotate(root);
+      return this.LeftRotate(root);
+    }
+    return root;
   }
 
   private LeftRotate(root: AVLNode | null) {
     if (!root || !root.rightChild) throw new Error("give me the root!");
 
-    const newRoot: AVLNode | null = root.leftChild;
+    const newRoot: AVLNode | null = root.rightChild;
+    root.rightChild = newRoot?.leftChild ?? null;
+    newRoot.leftChild = root;
 
-    newRoot.rightChild = root;
+    this.setHeight(root);
+    this.setHeight(newRoot);
+
+    return newRoot;
   }
 
-  //   private rightRotate(root: AVLNode | null) {
+  private rightRotate(root: AVLNode | null) {
+    if (!root || !root.leftChild) throw new Error("give me the root!");
 
-  //   }
+    const newRoot: AVLNode | null = root.leftChild;
+    root.leftChild = newRoot?.rightChild ?? null;
+    newRoot.rightChild = root;
+
+    this.setHeight(root);
+    this.setHeight(newRoot);
+
+    return newRoot;
+  }
 
   private balanceFactor(node: AVLNode): number {
     return this.height(node.leftChild) - this.height(node.rightChild);

@@ -93,7 +93,6 @@ export class BinaryTree {
     );
   }
 
-  // for just a binary tree O(N)
   public min(root: TreeNode | null = this.root): number {
     if (root === null) return Number.MAX_VALUE;
 
@@ -248,16 +247,25 @@ export class BinaryTree {
 
     return list;
   }
-  //   public isBalanced(tree: BinaryTree): boolean {
-  //     const isBalanced = (root: TreeNode | null): boolean => {
+  public isBalanced(tree: BinaryTree): boolean {
+    const isBalanced = (root: TreeNode | null): boolean => {
+      if (root === null) return true;
 
-  //     };
-  //     return isBalanced(tree.root);
-  //   }
+      const balanceFactor =
+        this.height(root.leftChild) - this.height(root.rightChild);
 
-  //   public isPerfect(): boolean {
+      return (
+        Math.abs(balanceFactor) <= 1 &&
+        isBalanced(root.leftChild) &&
+        isBalanced(root.rightChild)
+      );
+    };
+    return isBalanced(this.root);
+  }
 
-  //   }
+  public isPerfect(): boolean {
+    return Math.pow(2, this.height() + 1) - 1 === this.size();
+  }
 
   *[Symbol.iterator](): IterableIterator<{
     value: number;
