@@ -9,7 +9,7 @@ class Entry {
 }
 
 export class HashMap {
-  entries: Array<Entry | undefined>;
+  entries: Array<Entry | null>;
 
   count: number = 0;
   capacity: number = 0;
@@ -31,13 +31,13 @@ export class HashMap {
 
     while (steps < this.capacity) {
       let index = this.index(key, steps++);
-      var entry = this.entries[index];
-      if (entry == null || entry.key == key) return index;
+      let entry = this.entries[index];
+      if (entry === null || entry.key === key) return index;
     }
     return -1;
   }
 
-  private getEntry(key: number): Entry | undefined {
+  private getEntry(key: number): Entry | null {
     const index = this.getIndex(key);
     return this.entries[index];
   }
@@ -62,12 +62,12 @@ export class HashMap {
   }
 
   public remove(k: number) {
-    if (this.isEmpty()) throw new Error("there is nothing here");
+    if (this.isEmpty()) throw new Error("there is Nothing in HashMAp dude");
 
     const existingIndex = this.getIndex(k);
-    if (!existingIndex || existingIndex === -1) return undefined;
+    if (!existingIndex || existingIndex === -1) return null;
 
-    this.entries[existingIndex] = undefined;
+    this.entries[existingIndex] = null;
     this.count--;
   }
 
@@ -82,7 +82,7 @@ export class HashMap {
     return this.count;
   }
 
-  *[Symbol.iterator](): IterableIterator<Entry | undefined> {
+  *[Symbol.iterator](): IterableIterator<Entry | null> {
     for (const e of this.entries) {
       yield e;
     }

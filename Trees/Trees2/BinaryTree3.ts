@@ -23,11 +23,8 @@ export class BinaryTree {
     const insert = (value: number, node: TreeNode | null): TreeNode => {
       if (node === null) return new TreeNode(value);
 
-      if (value < node.value) {
-        node.leftChild = insert(value, node.leftChild);
-      } else {
-        node.rightChild = insert(value, node.rightChild);
-      }
+      if (value < node.value) node.leftChild = insert(value, node.leftChild);
+      else node.rightChild = insert(value, node.rightChild);
 
       return node;
     };
@@ -123,7 +120,6 @@ export class BinaryTree {
         );
       else return false;
     };
-    console.log([...otherTree]);
 
     return equals(this.root, otherTree.root);
   }
@@ -180,13 +176,13 @@ export class BinaryTree {
   }
 
   public size(): number {
-    const count = (root: TreeNode | null): number => {
+    const size = (root: TreeNode | null): number => {
       if (root === null) return 0;
 
-      return 1 + count(root.leftChild) + count(root.rightChild);
+      return 1 + size(root.leftChild) + size(root.rightChild);
     };
 
-    return count(this.root);
+    return size(this.root);
   }
 
   public countLeaves(): number {
