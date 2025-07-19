@@ -60,7 +60,7 @@ export class Heap {
 
   private largerChildIndex(index: number): number {
     if (!this.hasLeftChild(index)) return index;
-    if (!this.hasRightChild(index)) return index;
+    if (!this.hasRightChild(index)) return this.leftChild(index);
 
     return this.leftChild(index) > this.rightChild(index)
       ? (index = this.leftIndex(index))

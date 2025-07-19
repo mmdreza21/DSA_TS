@@ -49,10 +49,7 @@ class Heap2 {
   private bubbleDown() {
     let index = 0;
 
-    while (
-      this.size > index &&
-      this.items[index] < this.items[this.largerChildIndex(index)]
-    ) {
+    while (this.size > index && !this.isValidParent(index)) {
       const largerChildIndex = this.largerChildIndex(index);
       this.swap(index, largerChildIndex);
       index = largerChildIndex;

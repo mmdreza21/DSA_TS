@@ -46,7 +46,7 @@ export class AVLTree {
     }
     if (this.isRightHeavy(root)) {
       if (root.rightChild && this.balanceFactor(root.rightChild) > 0)
-        root.rightChild = this.rightRotate(root);
+        root.rightChild = this.rightRotate(root.rightChild);
       return this.LeftRotate(root);
     }
     return root;
