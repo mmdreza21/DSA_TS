@@ -5,6 +5,10 @@ class TrieNode {
   constructor(val: string) {
     this.value = val;
   }
+
+  public getChildren(): TrieNode[] {
+    return Array.from(this.children.values());
+  }
 }
 
 export class Tire {
@@ -28,8 +32,14 @@ export class Tire {
     }
   }
 
-  public traverse(node: TrieNode = this.root) {
-    for (const child of object) {
+  public traverse(root: TrieNode = this.root) {
+    // pre-order traverse
+    console.log(root.value);
+
+    for (const child of root.getChildren()) {
+      this.traverse(child);
     }
+    // post-order traverse
+    // console.log(root.value);
   }
 }
