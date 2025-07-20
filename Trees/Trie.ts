@@ -27,4 +27,9 @@ export class Tire {
       }
     }
   }
+
+  public traverse(node: TrieNode = this.root) {
+    for (const child of object) {
+    }
+  }
 }
