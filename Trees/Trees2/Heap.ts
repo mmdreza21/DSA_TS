@@ -78,14 +78,14 @@ export class Heap {
   }
 
   private leftChild(index: number) {
-    return index * 2 + 1;
+    return Math.floor(index * 2 + 1);
   }
   private rightChild(index: number) {
-    return index * 2 + 2;
+    return Math.floor(index * 2 + 2);
   }
 
   private parent(index: number): number {
-    return index / 2 - 1;
+    return Math.floor(index / 2 - 1);
   }
 
   private swap(first: number, second: number) {

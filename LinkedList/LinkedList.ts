@@ -146,6 +146,7 @@ export class LinkedList<T> {
     }
     return arr;
   }
+
   /**
    * reverse
    */

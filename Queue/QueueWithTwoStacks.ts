@@ -19,7 +19,7 @@ export class QueueWithTwoStacks {
     this.counter++;
   }
 
-  moveStack1ToStack2() {
+  private moveStack1ToStack2() {
     if (this.stack2.isEmpty())
       while (!this.stack1.isEmpty()) this.stack2.push(this.stack1.pop()!);
   }
