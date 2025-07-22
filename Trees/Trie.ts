@@ -1,35 +1,81 @@
 class TrieNode {
+  private AlphabetSize: number = 26;
   value: string;
-  children: Array<TrieNode> = new Array(26);
+  // children = Array<TrieNode> = new Array(this.AlphabetSize)
+  children = new Map<string, TrieNode>();
   isEndOfWord: boolean = false;
   constructor(val: string) {
     this.value = val;
   }
 
+  public hasChild(key: string): boolean {
+    return this.children.has(key);
+  }
+
+  public addChild(ch: string): void {
+    this.children.set(ch, new TrieNode(ch));
+  }
+
+  public getChild(ch: string): TrieNode | undefined {
+    return this.children.get(ch);
+  }
+
   public getChildren(): TrieNode[] {
     return Array.from(this.children.values());
   }
+
+  public hasChildren(): boolean {
+    return !!this.children.values.length;
+  }
+
+  public removeChild(ch: string): void {
+    this.children.clear();
+  }
 }
 
-export class Tire {
+export class Trie {
   root: TrieNode;
 
   constructor() {
-    this.root = new TrieNode("");
+    this.root = new TrieNode(" ");
     console.log(this.root);
   }
 
-  private findIndex(ch: string) {
-    return "a".charCodeAt(0) - ch.charCodeAt(0);
+  public insert(word: string) {
+    let current = this.root;
+    for (const ch of word) {
+      if (!current.hasChild(ch)) current.addChild(ch);
+      current = current.getChild(ch)!;
+    }
+    current.isEndOfWord = true;
   }
 
-  public insert(word: string) {
+  public contain(word: string): boolean {
+    let current = this.root;
     for (const ch of word) {
-      if (this.root.children.find((e) => e.value === ch)) {
-      } else {
-        this.root.children[this.findIndex(ch)] = new TrieNode(ch);
-      }
+      if (!current.hasChild(ch)) return false;
+      current = current.getChild(ch)!;
     }
+    return current.isEndOfWord;
+  }
+
+  public remove(
+    word: string,
+    root: TrieNode = this.root,
+    index: number = 0
+  ): void {
+    if (index === word.length) {
+      root.isEndOfWord = false;
+      return;
+    }
+
+    let ch = word.charAt(index);
+    let child = root.getChild(ch);
+    if (!child) return;
+
+    this.remove(word, child, index + 1);
+
+    if (!child.hasChildren() && !child.isEndOfWord) root.removeChild(ch);
   }
 
   public traverse(root: TrieNode = this.root) {
@@ -41,5 +87,36 @@ export class Tire {
     }
     // post-order traverse
     // console.log(root.value);
+  }
+
+  // private getChildIndex(ch: string) {
+  //   return ch.charCodeAt(0) - "a".charCodeAt(0);
+  // }
+  // for array
+  // public insert(word: string) {
+  //   let current = this.root;
+
+  //   for (const ch of word) {
+  //     if (!current.children[this.getChildIndex(ch)])
+  //       current.children[this.getChildIndex(ch)] = new TrieNode(ch);
+  //     current = current.children[this.getChildIndex(ch)];
+  //   }
+
+  //   current.isEndOfWord = true;
+  // }
+
+  *[Symbol.iterator](): IterableIterator<string> {
+    function* traverse(node: TrieNode, prefix: string): Generator<string> {
+      if (node.isEndOfWord) {
+        // Skip root's dummy value
+        yield prefix;
+      }
+
+      for (const [char, childNode] of node.children) {
+        yield* traverse(childNode, prefix + char);
+      }
+    }
+
+    yield* traverse(this.root, "");
   }
 }
