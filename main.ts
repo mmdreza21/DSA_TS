@@ -15,7 +15,12 @@ const rl = readline.createInterface({
 class Main {
   constructor() {
     const tire = new Tire();
-    tire.insert("d");
+    tire.insert("car");
+    tire.insert("care");
+
+    tire.remove("car");
+    console.log("car", tire.contain("car"));
+    console.log("care", tire.contain("care"));
   }
 }
 
