@@ -1,4 +1,5 @@
 class TrieNode {
+  private AlphabetSize: number = 26;
   value: string;
   children = new Map<string, TrieNode>();
   isEndOfWord: boolean = false;
@@ -31,7 +32,7 @@ class TrieNode {
   }
 }
 
-export class Tire {
+export class Trie {
   root: TrieNode;
 
   constructor() {
@@ -88,5 +89,36 @@ export class Tire {
     }
     // post-order traverse
     // console.log(root.value);
+  }
+
+  // private getChildIndex(ch: string) {
+  //   return ch.charCodeAt(0) - "a".charCodeAt(0);
+  // }
+  // for array
+  // public insert(word: string) {
+  //   let current = this.root;
+
+  //   for (const ch of word) {
+  //     if (!current.children[this.getChildIndex(ch)])
+  //       current.children[this.getChildIndex(ch)] = new TrieNode(ch);
+  //     current = current.children[this.getChildIndex(ch)];
+  //   }
+
+  //   current.isEndOfWord = true;
+  // }
+
+  *[Symbol.iterator](): IterableIterator<string> {
+    function* traverse(node: TrieNode, prefix: string): Generator<string> {
+      if (node.isEndOfWord) {
+        // Skip root's dummy value
+        yield prefix;
+      }
+
+      for (const [char, childNode] of node.children) {
+        yield* traverse(childNode, prefix + char);
+      }
+    }
+
+    yield* traverse(this.root, "");
   }
 }

@@ -5,7 +5,7 @@ import { AVLTree } from "./Trees/AVLTree.ts";
 import { Stack } from "./Stack/Stack.ts";
 import { LinkedListQueue } from "./Queue/LinkedListQueue.ts";
 import { HashTableExercises } from "./HashTables/HashTableExercises.ts";
-import { Tire } from "./Trees/Trie.ts";
+import { Trie } from "./Trees/Trie.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -14,6 +14,7 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
+<<<<<<< HEAD
     const tire = new Tire();
     tire.insert("car");
     tire.insert("care");
@@ -21,6 +22,19 @@ class Main {
     tire.remove("car");
     console.log("car", tire.contain("car"));
     console.log("care", tire.contain("care"));
+=======
+    const trie = new Trie();
+    trie.insert("cat");
+    trie.insert("car");
+    trie.insert("dog");
+    trie.insert("cars");
+    trie.insert("mamadreza");
+    trie.insert("mamad");
+
+    console.log(trie.contain("cat"));
+
+    console.log([...trie]);
+>>>>>>> d274b4ad25a8d6c26cf4067c623118f0d41f34ce
   }
 }
 
