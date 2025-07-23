@@ -14,23 +14,13 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-<<<<<<< HEAD
-    const tire = new Tire();
-    tire.insert("car");
-    tire.insert("care");
-
-    tire.remove("car");
-    console.log("car", tire.contain("car"));
-    console.log("care", tire.contain("care"));
-=======
     const trie = new Trie();
     trie.insert("car");
     trie.insert("care");
 
-    console.log("car", trie.findWords("c"));
+    console.log("car", trie.containR("ca"));
 
     console.log([...trie]);
->>>>>>> d274b4ad25a8d6c26cf4067c623118f0d41f34ce
   }
 }
 

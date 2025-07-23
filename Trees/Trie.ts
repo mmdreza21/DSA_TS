@@ -61,6 +61,22 @@ export class Trie {
     return current.isEndOfWord;
   }
 
+  public containR(
+    word: string,
+    root: TrieNode = this.root,
+    index: number = 0
+  ): boolean {
+    if (!word) return false;
+
+    if (index === word.length) return root.isEndOfWord;
+
+    const ch = word.charAt(index);
+    const child = root.getChild(ch);
+    if (!child) return false;
+
+    return this.containR(word, child, index + 1);
+  }
+
   public remove(
     word: string,
     root: TrieNode = this.root,
@@ -107,6 +123,17 @@ export class Trie {
       current = child;
     }
     return current;
+  }
+
+  public countWords() {}
+
+  public longestCommonPrefix(word: string, root: TrieNode, index: number = 0) {
+    const prefix = "";
+
+    let ch = word.charAt(index);
+    let child = root.getChild(ch);
+
+    this.longestCommonPrefix(word, child, index);
   }
 
   public traverse(root: TrieNode = this.root) {
