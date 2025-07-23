@@ -24,14 +24,10 @@ class Main {
     console.log("care", tire.contain("care"));
 =======
     const trie = new Trie();
-    trie.insert("cat");
     trie.insert("car");
-    trie.insert("dog");
-    trie.insert("cars");
-    trie.insert("mamadreza");
-    trie.insert("mamad");
+    trie.insert("care");
 
-    console.log(trie.contain("cat"));
+    console.log("car", trie.findWords("c"));
 
     console.log([...trie]);
 >>>>>>> d274b4ad25a8d6c26cf4067c623118f0d41f34ce
