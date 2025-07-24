@@ -105,7 +105,21 @@ export class Trie {
   //   }
 
   //   current.isEndOfWord = true;
+
   // }
+
+  public countWord(root: TrieNode = this.root): number {
+    let total: number = 0;
+
+    if (root.isEndOfWord) total++;
+
+    for (const child of root.getChildren()) {
+      total += this.countWord(child);
+    }
+    return total;
+  }
+
+  public longestCommonPrefix(word: string, root: TrieNode = this.root) {}
 
   *[Symbol.iterator](): IterableIterator<string> {
     function* traverse(node: TrieNode, prefix: string): Generator<string> {
