@@ -15,7 +15,7 @@ class TrieNode {
     this.children.set(ch, new TrieNode(ch));
   }
 
-  findChild(ch: string): TrieNode {
+  getChild(ch: string): TrieNode {
     return this.children.get(ch)!;
   }
 
@@ -24,11 +24,11 @@ class TrieNode {
   }
 
   public hasChildren(): boolean {
-    return !!this.children.values.length;
+    return !this.children.values.length;
   }
 
   public removeChild(ch: string): void {
-    this.children.clear();
+    this.children.delete(ch);
   }
 }
 
@@ -47,7 +47,7 @@ export class Trie {
     let current = this.root;
     for (const ch of word) {
       if (!current.hasChild(ch)) current.putChild(ch);
-      current = current.findChild(ch);
+      current = current.getChild(ch);
     }
     current.isEndOfWord = true;
   }
@@ -56,9 +56,25 @@ export class Trie {
     let current = this.root;
     for (const ch of word) {
       if (!current.hasChild(ch)) return false;
-      current = current.findChild(ch);
+      current = current.getChild(ch);
     }
     return current.isEndOfWord;
+  }
+
+  public containR(
+    word: string,
+    root: TrieNode = this.root,
+    index: number = 0
+  ): boolean {
+    if (!word) return false;
+
+    if (index === word.length) return root.isEndOfWord;
+
+    const ch = word.charAt(index);
+    const child = root.getChild(ch);
+    if (!child) return false;
+
+    return this.containR(word, child, index + 1);
   }
 
   public remove(
@@ -72,12 +88,52 @@ export class Trie {
     }
 
     let ch = word.charAt(index);
-    let child = root.findChild(ch);
+    let child = root.getChild(ch);
     if (!child) return;
 
     this.remove(word, child, index + 1);
 
+    // console.log(ch, child.hasChildren());
+
     if (!child.hasChildren() && !child.isEndOfWord) root.removeChild(ch);
+  }
+
+  public findWords(prefix: string): string[] {
+    const words: string[] = [];
+    const lastNode = this.findLastNodeOf(prefix);
+
+    const findWords = (prefix: string, words: string[], root: TrieNode) => {
+      if (!root) return;
+      if (root.isEndOfWord) words.push(prefix);
+
+      for (const child of root.getChildren()) {
+        findWords(prefix + child.value, words, child);
+      }
+    };
+
+    findWords(prefix, words, this.root);
+    return words;
+  }
+
+  private findLastNodeOf(prefix: string): TrieNode | null {
+    let current = this.root;
+    for (const ch of prefix) {
+      const child = current.getChild(ch);
+      if (!child) return null;
+      current = child;
+    }
+    return current;
+  }
+
+  public countWords() {}
+
+  public longestCommonPrefix(word: string, root: TrieNode, index: number = 0) {
+    const prefix = "";
+
+    let ch = word.charAt(index);
+    let child = root.getChild(ch);
+
+    this.longestCommonPrefix(word, child, index);
   }
 
   public traverse(root: TrieNode = this.root) {
@@ -136,3 +192,80 @@ export class Trie {
     yield* traverse(this.root, "");
   }
 }
+
+// 📌 Simple Explanation of remove() Method in Trie
+// This remove() function deletes a word from a Trie (prefix tree) recursively, cleaning up unnecessary nodes along the way.
+
+// 🧠 How It Works (Step-by-step):
+// ✅ 1. Base Case:
+// ts
+// Copy
+// Edit
+// if (index === word.length) {
+//   root.isEndOfWord = false;
+//   return;
+// }
+// We've reached the end of the word.
+
+// Mark isEndOfWord = false → the word is no longer valid in the trie.
+
+// Don't delete nodes yet — they may still be needed by other words.
+
+// ✅ 2. Recursive Traversal:
+// ts
+// Copy
+// Edit
+// let ch = word.charAt(index);
+// let child = root.getChild(ch);
+// if (!child) return;
+// Get the current character (ch) at this level.
+
+// Find the child node for this character.
+
+// If the path doesn't exist, return (word not in trie).
+
+// ✅ 3. Recursive Call:
+// ts
+// Copy
+// Edit
+// this.remove(word, child, index + 1);
+// Continue recursively down the trie with the next character.
+
+// ✅ 4. Clean-up Unused Nodes:
+// ts
+// Copy
+// Edit
+// if (!child.hasChildren() && !child.isEndOfWord) {
+//   root.removeChild(ch);
+// }
+// After returning from recursion:
+
+// If the child node has no children and is not the end of another word, it’s unnecessary.
+
+// Remove it from the parent.
+
+// 📍 Example Route:
+// Let’s say you want to remove "cat" from a trie that contains "cat" and "car".
+
+// Start at root → c → a → t.
+
+// Unmark t as isEndOfWord.
+
+// Check t:
+
+// Has no children and not isEndOfWord → remove it.
+
+// Now at a, check if it should remove t.
+
+// But a still has r (from "car") → don’t remove a.
+
+// Only "t" node is deleted. "c" → "a" → "r" (from "car") still remains.
+
+// ✅ Summary
+// Step	Purpose
+// index === word.length	End of word → unmark as valid
+// getChild(ch)	Traverse deeper
+// remove(...)	Recursively remove rest
+// removeChild(ch)	Clean unused branches
+
+// Let me know if you want a visual diagram too.

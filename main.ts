@@ -15,16 +15,10 @@ const rl = readline.createInterface({
 class Main {
   constructor() {
     const trie = new Trie();
-    trie.insert("cat");
     trie.insert("car");
-    trie.insert("dog");
-    trie.insert("cars");
-    trie.insert("mamadreza");
-    trie.insert("mamad");
+    trie.insert("care");
 
-    console.log(trie.countWord());
-
-    console.log(trie.contain("cat"));
+    console.log("car", trie.containR("ca"));
 
     console.log([...trie]);
   }
