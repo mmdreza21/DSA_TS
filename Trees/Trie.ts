@@ -127,15 +127,6 @@ export class Trie {
 
   public countWords() {}
 
-  public longestCommonPrefix(word: string, root: TrieNode, index: number = 0) {
-    const prefix = "";
-
-    let ch = word.charAt(index);
-    let child = root.getChild(ch);
-
-    this.longestCommonPrefix(word, child, index);
-  }
-
   public traverse(root: TrieNode = this.root) {
     // pre-order traverse
     console.log(root.value);
@@ -175,7 +166,34 @@ export class Trie {
     return total;
   }
 
-  public longestCommonPrefix(word: string, root: TrieNode = this.root) {}
+  public static longestCommonPrefix(words: string[]) {
+    const trie = new Trie();
+    for (const word of words) {
+      trie.insert(word);
+    }
+
+    let prefix = "";
+    const maxChar = this.findShortest(words).length;
+    let current = trie.root;
+
+    while (prefix.length < maxChar) {
+      const children = current.getChildren();
+      if (children.length != 1) break;
+
+      current = children[0];
+      prefix += current.value;
+    }
+    return prefix;
+  }
+
+  private static findShortest(words: string[]) {
+    let shortest = words[0];
+
+    for (const word of words) {
+      if (word.length < shortest.length) shortest = word;
+    }
+    return shortest;
+  }
 
   *[Symbol.iterator](): IterableIterator<string> {
     function* traverse(node: TrieNode, prefix: string): Generator<string> {

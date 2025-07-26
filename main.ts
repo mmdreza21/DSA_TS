@@ -14,13 +14,16 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const trie = new Trie();
-    trie.insert("car");
-    trie.insert("care");
+    // const trie = new Trie();
+    // trie.insert("car");
+    // trie.insert("care");
 
-    console.log("car", trie.containR("ca"));
+    // console.log("car", trie.containR("ca"));
 
-    console.log([...trie]);
+    // console.log([...trie]);
+
+    const m = Trie.longestCommonPrefix(["card", "care"]);
+    console.log(m);
   }
 }
 
