@@ -39,10 +39,6 @@ export class Trie {
     this.root = new TrieNode("");
   }
 
-  // private findIndex(ch: string) {
-  //   return "a".charCodeAt(0) - ch.charCodeAt(0);
-  // }
-
   public insert(word: string) {
     let current = this.root;
     for (const ch of word) {
@@ -93,8 +89,6 @@ export class Trie {
 
     this.remove(word, child, index + 1);
 
-    // console.log(ch, child.hasChildren());
-
     if (!child.hasChildren() && !child.isEndOfWord) root.removeChild(ch);
   }
 
@@ -125,36 +119,6 @@ export class Trie {
     return current;
   }
 
-  public countWords() {}
-
-  public static longestCommonPrefix(words: string[]) {
-    const trie = new Trie();
-
-    for (const word of words) {
-      trie.insert(word);
-    }
-
-    const prefix = "";
-    const maxLen = Trie.shortestWord(words).length;
-const current  = trie.root
-    while (prefix.length<maxLen) {
-  const current =
-
-
-}
-
-
-
-  }
-
-  private static shortestWord(words: string[]): string {
-    let shortestWord = words[0];
-    for (const word of words) {
-      if (word.length && word.length < shortestWord.length) shortestWord = word;
-    }
-    return shortestWord;
-  }
-
   public traverse(root: TrieNode = this.root) {
     // pre-order traverse
     console.log(root.value);
@@ -164,6 +128,61 @@ const current  = trie.root
     }
     // post-order traverse
     // console.log(root.value);
+  }
+
+  public countWord(root: TrieNode = this.root): number {
+    let total: number = 0;
+
+    if (root.isEndOfWord) total++;
+
+    for (const child of root.getChildren()) {
+      total += this.countWord(child);
+    }
+    return total;
+  }
+
+  public static longestCommonPrefix(words: string[]) {
+    const trie = new Trie();
+    for (const word of words) {
+      trie.insert(word);
+    }
+
+    let prefix = "";
+    const maxChar = this.findShortest(words).length;
+    let current = trie.root;
+
+    while (prefix.length < maxChar) {
+      const children = current.getChildren();
+      if (children.length != 1) break;
+
+      current = children[0];
+      prefix += current.value;
+    }
+    return prefix;
+  }
+
+  private static findShortest(words: string[]) {
+    let shortest = words[0];
+
+    for (const word of words) {
+      if (word.length < shortest.length) shortest = word;
+    }
+    return shortest;
+  }
+
+  *[Symbol.iterator](): IterableIterator<string> {
+    function* traverse(node: TrieNode, prefix: string): Generator<string> {
+      if (node.isEndOfWord) {
+        // Skip root's dummy value
+        yield prefix;
+      }
+
+      for (const [char, childNode] of node.children) {
+        yield* traverse(childNode, prefix + char);
+      }
+    }
+
+    yield* traverse(this.root, "");
   }
 
   // private getChildIndex(ch: string) {
@@ -182,32 +201,6 @@ const current  = trie.root
   //   current.isEndOfWord = true;
 
   // }
-
-  public countWord(root: TrieNode = this.root): number {
-    let total: number = 0;
-
-    if (root.isEndOfWord) total++;
-
-    for (const child of root.getChildren()) {
-      total += this.countWord(child);
-    }
-    return total;
-  }
-
-  *[Symbol.iterator](): IterableIterator<string> {
-    function* traverse(node: TrieNode, prefix: string): Generator<string> {
-      if (node.isEndOfWord) {
-        // Skip root's dummy value
-        yield prefix;
-      }
-
-      for (const [char, childNode] of node.children) {
-        yield* traverse(childNode, prefix + char);
-      }
-    }
-
-    yield* traverse(this.root, "");
-  }
 }
 
 // 📌 Simple Explanation of remove() Method in Trie
