@@ -88,24 +88,33 @@ export class Trie {
     if (!child) return;
 
     this.remove(word, child, index + 1);
-
     if (!child.hasChildren() && !child.isEndOfWord) root.removeChild(ch);
   }
 
   public findWords(prefix: string): string[] {
+    // 1. Store results here
     const words: string[] = [];
-    const lastNode = this.findLastNodeOf(prefix);
 
+    // 2. Get the last node of the given prefix in the trie
+    const lastNode = this.findLastNodeOf(prefix);
+    if (!lastNode) return []; // optional: handle prefix not found
+
+    // 3. Define recursive function to collect words
     const findWords = (prefix: string, words: string[], root: TrieNode) => {
       if (!root) return;
-      if (root.isEndOfWord) words.push(prefix);
+
+      if (root.isEndOfWord) {
+        words.push(prefix); // Found a word
+      }
 
       for (const child of root.getChildren()) {
         findWords(prefix + child.value, words, child);
       }
     };
+    // 4. Begin recursion from the last node of the prefix
+    findWords(prefix, words, lastNode);
 
-    findWords(prefix, words, this.root);
+    // 5. Return all collected words
     return words;
   }
 
@@ -161,6 +170,27 @@ export class Trie {
     return prefix;
   }
 
+  public static longestCommonPrefix2(words: string[]) {
+    const trie = new Trie();
+    for (const word of words) {
+      trie.insert(word);
+    }
+
+    let prefix = "";
+    const maxLen = this.findShortest(words).length;
+    let current = trie.root;
+
+    while (prefix.length < maxLen) {
+      const children = current.getChildren();
+      if (children.length != 1) break;
+
+      current = children[0];
+      prefix += current.value;
+    }
+
+    return prefix;
+  }
+
   private static findShortest(words: string[]) {
     let shortest = words[0];
 
@@ -202,6 +232,23 @@ export class Trie {
 
   // }
 }
+
+// private getChildIndex(ch: string) {
+//   return ch.charCodeAt(0) - "a".charCodeAt(0);
+// }
+// for array
+// public insert(word: string) {
+//   let current = this.root;
+
+//   for (const ch of word) {
+//     if (!current.children[this.getChildIndex(ch)])
+//       current.children[this.getChildIndex(ch)] = new TrieNode(ch);
+//     current = current.children[this.getChildIndex(ch)];
+//   }
+
+//   current.isEndOfWord = true;
+
+// }
 
 // 📌 Simple Explanation of remove() Method in Trie
 // This remove() function deletes a word from a Trie (prefix tree) recursively, cleaning up unnecessary nodes along the way.
