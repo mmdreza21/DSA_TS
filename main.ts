@@ -1,11 +1,7 @@
 // main.ts
 import readline from "readline";
 
-import { AVLTree } from "./Trees/AVLTree.ts";
-import { Stack } from "./Stack/Stack.ts";
-import { LinkedListQueue } from "./Queue/LinkedListQueue.ts";
-import { HashTableExercises } from "./HashTables/HashTableExercises.ts";
-import { Trie } from "./Trees/Trie.ts";
+import { Graph } from "./Graph/Graph.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -14,16 +10,24 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    // const trie = new Trie();
-    // trie.insert("car");
-    // trie.insert("care");
+    const graph = new Graph();
 
-    // console.log("car", trie.containR("ca"));
+    graph.addNode("a");
+    graph.addNode("b");
+    graph.addNode("c");
+    graph.addNode("d");
 
-    // console.log([...trie]);
+    graph.addEdge("a", "b");
+    graph.addEdge("b", "d");
+    graph.addEdge("d", "c");
+    graph.addEdge("a", "c");
 
-    const m = Trie.longestCommonPrefix(["card", "care"]);
-    console.log(m);
+    // graph.removeEdge("a", "b");
+    // graph.removeNode("a");
+    graph.DepthFirstTraverse("G");
+    console.log("---------------------------");
+    console.log("graph node ", [...graph]);
+    console.log("graph edge ", [...graph.edges()]);
   }
 }
 
