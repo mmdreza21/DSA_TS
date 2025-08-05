@@ -24,8 +24,11 @@ class Main {
 
     // graph.removeEdge("a", "b");
     // graph.removeNode("a");
-    graph.DepthFirstTraverse("G");
+    graph.BreadthFirstTraverse("z");
     console.log("---------------------------");
+    graph.DepthFirstTraverseRecessive("a");
+    console.log("---------------------------");
+    graph.DepthFirstTraverse("a");
     console.log("graph node ", [...graph]);
     console.log("graph edge ", [...graph.edges()]);
   }

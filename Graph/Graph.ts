@@ -1,3 +1,6 @@
+import { Queue } from "../Queue/Queue.ts";
+import { Stack } from "../Stack/Stack.ts";
+
 class GraphNode {
   label: string;
   constructor(label: string) {
@@ -51,11 +54,32 @@ export class Graph {
   }
 
   public DepthFirstTraverse(label: string) {
+    const node = this.nodes.get(label);
+    if (!node) return;
+
+    const stack = new Stack<GraphNode>(10);
+    stack.push(node);
+
+    const visited = new Set<GraphNode>();
+
+    while (!stack.isEmpty()) {
+      const current = stack.pop(); //A
+      if (visited.has(current!)) continue;
+      console.log(current?.label);
+      visited.add(current!);
+
+      for (const n of this.adjacencyList.get(current!)!) {
+        if (!visited.has(n)) stack.push(n);
+      }
+    }
+  }
+
+  public DepthFirstTraverseRecessive(label: string) {
     const depthFirstTraverse = (root: GraphNode, visited: Set<GraphNode>) => {
       const edges = this.adjacencyList.get(root);
       if (!edges) return;
-      console.log(root.label);
 
+      console.log(root.label);
       visited.add(root);
 
       for (const n of edges) {
@@ -64,6 +88,27 @@ export class Graph {
     };
 
     depthFirstTraverse(this.nodes.get(label)!, new Set<GraphNode>());
+  }
+
+  public BreadthFirstTraverse(label: string) {
+    const node = this.nodes.get(label);
+    if (!node) return;
+
+    const visited = new Set<GraphNode>();
+    const queue = new Queue<GraphNode>(10);
+    queue.enqueue(node);
+
+    while (!queue.isEmpty()) {
+      const current = queue.dequeue();
+      if (visited.has(current!)) continue;
+
+      console.log(current?.label);
+      visited.add(current!);
+
+      for (const n of this.adjacencyList.get(current!)!) {
+        if (!visited.has(n!)) queue.enqueue(n);
+      }
+    }
   }
 
   *[Symbol.iterator](): IterableIterator<GraphNode> {
