@@ -12,23 +12,22 @@ class Main {
   constructor() {
     const graph = new Graph();
 
-    graph.addNode("a");
-    graph.addNode("b");
-    graph.addNode("c");
-    graph.addNode("d");
+    graph.addNode("X");
+    graph.addNode("A");
+    graph.addNode("B");
+    graph.addNode("P");
 
-    graph.addEdge("a", "b");
-    graph.addEdge("b", "d");
-    graph.addEdge("d", "c");
-    graph.addEdge("a", "c");
+    graph.addEdge("X", "A");
+    graph.addEdge("X", "B");
+    graph.addEdge("A", "P");
+    graph.addEdge("B", "P");
 
     // graph.removeEdge("a", "b");
     // graph.removeNode("a");
-    graph.BreadthFirstTraverse("z");
+    graph.topologicalSort("X");
     console.log("---------------------------");
-    graph.DepthFirstTraverseRecessive("a");
+    console.log(graph.topologicalSortMosh("X"));
     console.log("---------------------------");
-    graph.DepthFirstTraverse("a");
     console.log("graph node ", [...graph]);
     console.log("graph edge ", [...graph.edges()]);
   }

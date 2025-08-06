@@ -111,13 +111,61 @@ export class Graph {
     }
   }
 
+  public topologicalSort(label: string) {
+    const root = this.nodes.get(label);
+
+    const stack = new Stack(12);
+
+    const topologicalSort = (root: GraphNode, visited: Set<GraphNode>) => {
+      visited.add(root);
+      // if (visited.has(root)) return;
+      for (const n of this.adjacencyList.get(root)!)
+        if (!visited.has(n)) topologicalSort(n, visited);
+
+      stack.push(root.label);
+    };
+
+    topologicalSort(root!, new Set());
+    while (!stack.isEmpty()) {
+      console.log(stack.pop());
+    }
+    console.log(stack.stackContent);
+  }
+
+  public topologicalSortMosh(label: string) {
+    const root = this.nodes.get(label);
+    const stack = new Stack<string>(12);
+    const visited = new Set<GraphNode>();
+
+    const topologicalSort = (
+      node: GraphNode,
+      visited: Set<GraphNode>,
+      stack: Stack<string>
+    ) => {
+      if (visited.has(node)) return;
+      visited.add(node);
+
+      for (const n of this.adjacencyList.get(node)!)
+        topologicalSort(n, visited, stack);
+
+      stack.push(node.label);
+    };
+
+    for (const node of this.nodes.values())
+      topologicalSort(node, visited, stack);
+
+    const sortedList: string[] = [];
+    while (!stack.isEmpty()) {
+      sortedList.push(stack.pop()!);
+    }
+    return sortedList;
+  }
+
   *[Symbol.iterator](): IterableIterator<GraphNode> {
     for (const node of this.nodes.values()) {
       yield node;
     }
   }
-
-  private che() {}
 
   // Iterator for edges in the graph (returns [from, to] pairs)
   *edges(): IterableIterator<[GraphNode, GraphNode]> {
