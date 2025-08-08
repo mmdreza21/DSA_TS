@@ -20,6 +20,18 @@ export class Graph {
     this.adjacencyList.set(node, new Set());
   }
 
+  public addEdge(from: string, to: string) {
+    const fromNode = this.nodes.get(from);
+    if (!fromNode) throw new Error("from node is ENotFund.");
+
+    const toNode = this.nodes.get(to);
+    if (!toNode) throw new Error("to node is ENotFund.");
+
+    this.adjacencyList.get(fromNode)!.add(toNode);
+    //if we want non directive graph we add next line too
+    // this.adjacencyList.get(toNode)!.push(fromNode);
+  }
+
   public removeNode(label: string) {
     const node = this.nodes.get(label);
     if (!node) return;
@@ -31,18 +43,6 @@ export class Graph {
     this.adjacencyList.delete(node);
 
     this.nodes.delete(label);
-  }
-
-  public addEdge(from: string, to: string) {
-    const fromNode = this.nodes.get(from);
-    if (!fromNode) throw new Error("from node is ENotFund.");
-
-    const toNode = this.nodes.get(to);
-    if (!toNode) throw new Error("to node is ENotFund.");
-
-    this.adjacencyList.get(fromNode)!.add(toNode);
-    //if we want non directive graph we add next line too
-    // this.adjacencyList.get(toNode)!.push(fromNode);
   }
 
   public removeEdge(from: string, to: string) {
@@ -111,13 +111,49 @@ export class Graph {
     }
   }
 
+  /**
+   * cycleDetector
+   */
+  public hasCycle(): boolean {
+    const unvisited = new Set<GraphNode>(this.nodes.values());
+    const visiting = new Set<GraphNode>();
+    const visited = new Set<GraphNode>();
+
+    const detectCycle = (node: GraphNode): boolean => {
+      // Move node from unvisited to visiting
+      unvisited.delete(node);
+      visiting.add(node);
+
+      for (const neighbor of this.adjacencyList.get(node) || []) {
+        if (visited.has(neighbor)) continue; // Already checked this path
+
+        if (visiting.has(neighbor)) return true; // Cycle detected!
+
+        if (detectCycle(neighbor)) return true;
+      }
+
+      // Move node from visiting to visited
+      visiting.delete(node);
+      visited.add(node);
+      return false;
+    };
+
+    // Check all components of the graph
+    while (unvisited.size > 0) {
+      const [startNode] = unvisited;
+      if (detectCycle(startNode)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
   *[Symbol.iterator](): IterableIterator<GraphNode> {
     for (const node of this.nodes.values()) {
       yield node;
     }
   }
-
-  private che() {}
 
   // Iterator for edges in the graph (returns [from, to] pairs)
   *edges(): IterableIterator<[GraphNode, GraphNode]> {
