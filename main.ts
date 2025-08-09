@@ -12,12 +12,12 @@ class Main {
   constructor() {
     const graph = new Graph();
 
-    graph.addNode("X");
-    graph.addNode("A");
-    graph.addNode("B");
-    graph.addNode("P");
-
+    graph.addNode("a");
+    graph.addNode("b");
     graph.addEdge("a", "b");
+    graph.addNode("c");
+    graph.addNode("d");
+
     graph.addEdge("b", "c");
     graph.addEdge("a", "c");
     graph.addEdge("d", "a");

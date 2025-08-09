@@ -28,6 +28,7 @@ export class Graph {
     if (!toNode) throw new Error("to node is ENotFund.");
 
     this.adjacencyList.get(fromNode)!.add(toNode);
+    console.log(this.adjacencyList);
     //if we want non directive graph we add next line too
     // this.adjacencyList.get(toNode)!.push(fromNode);
   }
@@ -50,7 +51,7 @@ export class Graph {
     const toNode = this.nodes.get(to);
     if (!fromNode || !toNode) return;
 
-    this.adjacencyList.delete(fromNode);
+    this.adjacencyList.get(fromNode)!.delete(toNode);
   }
 
   public DepthFirstTraverse(label: string) {
