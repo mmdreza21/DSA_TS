@@ -68,12 +68,16 @@ export class Graph {
     }
   }
 
+  
   // Iterator for edges in the graph (returns [from, to] pairs)
-  *edges(): IterableIterator<[GraphNode, GraphNode]> {
-    for (const [fromNode, neighbors] of this.nodes) {
+  *edges(): IterableIterator<string> {
+    for
+    for (const [fromNode, neighbors] of this.adjacencyList) {
       for (const toNode of neighbors) {
-        yield [fromNode, toNode];
+        yield ` ${fromNode.label} -> ${toNode.to.label} : ${toNode.weight}`;
       }
     }
   }
+
+
 }
