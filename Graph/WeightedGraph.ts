@@ -18,9 +18,9 @@ class GraphNode {
 }
 
 class Edge {
-  private from: GraphNode;
-  private to: GraphNode;
-  private weight: number;
+  public from: GraphNode;
+  public to: GraphNode;
+  public weight: number;
 
   constructor(from: GraphNode, to: GraphNode, weight: number) {
     this.from = from;
@@ -80,13 +80,12 @@ export class Graph {
     }
   }
 
-  // // Iterator for edges in the graph (returns [from, to] pairs)
-  // *edges(): IterableIterator<string> {
-  //   for
-  //   for (const [fromNode, neighbors] of this.adjacencyList) {
-  //     for (const toNode of neighbors) {
-  //       yield ` ${fromNode.label} -> ${toNode.to.label} : ${toNode.weight}`;
-  //     }
-  //   }
-  // }
+  // Iterator for edges in the graph (returns [from, to] pairs)
+  *edges(): IterableIterator<string> {
+    for (const node of this.nodes.values()) {
+      for (const edge of node.gteEdges.values()) {
+        yield `${edge.from.label} -> ${edge.to.label}: ${edge.weight}`;
+      }
+    }
+  }
 }
