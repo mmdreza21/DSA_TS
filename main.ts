@@ -21,7 +21,7 @@ class Main {
     graph.addEdge("b", "c", 2);
     graph.addEdge("a", "c", 1);
     graph.addEdge("d", "a", 5);
-
+    graph.getShortestDistance("a", "d");
     // graph.removeEdge("a", "b");
     // graph.removeNode("a");
     // graph.DepthFirstTraverse("d");
