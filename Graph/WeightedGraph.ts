@@ -57,32 +57,35 @@ export class Graph {
   }
 
   public getShortestDistance(from: string, to: string): number {
-    const distance = new Map<GraphNode, Number>();
-
-    for (const node of this.nodes.values()) {
-      distance.set(node, Number.MAX_VALUE);
-    }
-
-    const previousNodes = new Map<GraphNode, GraphNode>();
-    const shortestDist = 0;
     const fromNode = this.nodes.get(from);
     const toNode = this.nodes.get(to);
-
     if (!fromNode || !toNode) throw new Error("hah");
 
-    const getShortestDistance = (node: GraphNode) => {
-      const queue = new PriorityQueue<NodeEntry>(
-        (a, b) => b.priority - a.priority // Min-heap comparison
-      );
-      console.log("node", node);
+    const distance = new Map<GraphNode, number>();
+    for (const node of this.nodes.values())
+      distance.set(node, Number.MAX_VALUE);
+    distance.set(fromNode, 0); //starting node
 
-      if (node === toNode) return;
-      for (const neighbor of fromNode.gteEdges) {
-        getShortestDistance(neighbor.to);
+    const visited = new Set<GraphNode>();
+    const queue = new PriorityQueue<NodeEntry>(
+      (a, b) => b.priority - a.priority // Min-heap comparison
+    );
+    const previousNodes = new Map<GraphNode, GraphNode>();
+
+    while (!queue.isEmpty()) {
+      const current = queue.deq().node;
+      visited.add(current);
+
+      for (const edge of current.gteEdges) {
+        if (visited.has(edge.to)) continue;
+        const newDistent = distance.get(current)! + edge.weight;
+        if (newDistent < distance.get(edge.to)!) {
+          distance.set(edge.to, newDistent);
+          queue.enq(new NodeEntry(edge.to, newDistent));
+        }
       }
-    };
-    getShortestDistance(fromNode);
-    return shortestDist;
+    }
+    return distance.get(this.nodes.get(to)!)!;
   }
 
   *[Symbol.iterator](): IterableIterator<GraphNode> {
