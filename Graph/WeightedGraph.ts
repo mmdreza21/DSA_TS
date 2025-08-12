@@ -57,9 +57,21 @@ export class Graph {
   }
 
   public getShortestDistance(from: string, to: string): number {
+    const fromNode = this.nodes.get(from);
+    const toNode = this.nodes.get(to);
+    if (!fromNode || toNode) throw new Error("hah");
+
+    const distance = new Map<GraphNode, Number>();
+    const previousNodes = new Map<GraphNode, GraphNode>();
+
     const queue = new PriorityQueue<NodeEntry>(
       (a, b) => b.priority - a.priority // Min-heap comparison
     );
+
+    for (const fNode of from) {
+    }
+
+    return 0;
   }
 
   *[Symbol.iterator](): IterableIterator<GraphNode> {
@@ -68,16 +80,13 @@ export class Graph {
     }
   }
 
-  
-  // Iterator for edges in the graph (returns [from, to] pairs)
-  *edges(): IterableIterator<string> {
-    for
-    for (const [fromNode, neighbors] of this.adjacencyList) {
-      for (const toNode of neighbors) {
-        yield ` ${fromNode.label} -> ${toNode.to.label} : ${toNode.weight}`;
-      }
-    }
-  }
-
-
+  // // Iterator for edges in the graph (returns [from, to] pairs)
+  // *edges(): IterableIterator<string> {
+  //   for
+  //   for (const [fromNode, neighbors] of this.adjacencyList) {
+  //     for (const toNode of neighbors) {
+  //       yield ` ${fromNode.label} -> ${toNode.to.label} : ${toNode.weight}`;
+  //     }
+  //   }
+  // }
 }
