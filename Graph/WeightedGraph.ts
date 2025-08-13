@@ -62,14 +62,19 @@ export class Graph {
     if (!fromNode || !toNode) throw new Error("hah");
 
     const distance = new Map<GraphNode, number>();
+    // Initialize distances to all nodes as infinity
     for (const node of this.nodes.values())
       distance.set(node, Number.MAX_VALUE);
     distance.set(fromNode, 0); //starting node
 
     const visited = new Set<GraphNode>();
+    // Priority queue to hold nodes to explore, sorted by distance
     const queue = new PriorityQueue<NodeEntry>(
       (a, b) => b.priority - a.priority // Min-heap comparison
     );
+
+    queue.enq(new NodeEntry(fromNode, 0)); // Start with the source node
+
     const previousNodes = new Map<GraphNode, GraphNode>();
 
     while (!queue.isEmpty()) {
@@ -81,6 +86,7 @@ export class Graph {
         const newDistent = distance.get(current)! + edge.weight;
         if (newDistent < distance.get(edge.to)!) {
           distance.set(edge.to, newDistent);
+          // now we haw new distance, so we add it to the queue
           queue.enq(new NodeEntry(edge.to, newDistent));
         }
       }
