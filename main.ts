@@ -15,13 +15,13 @@ class Main {
     graph.addNode("a");
     graph.addNode("b");
     graph.addNode("c");
-    graph.addNode("d");
 
-    graph.addEdge("a", "b", 3);
+    graph.addEdge("a", "b", 1);
     graph.addEdge("b", "c", 2);
-    graph.addEdge("a", "c", 1);
-    graph.addEdge("d", "a", 5);
-    graph.getShortestDistance("a", "d");
+    graph.addEdge("a", "c", 10);
+
+    console.log(graph.getShortestDistance("a", "c"));
+    console.log(graph.getShortestPath("a", "c"));
     // graph.removeEdge("a", "b");
     // graph.removeNode("a");
     // graph.DepthFirstTraverse("d");
