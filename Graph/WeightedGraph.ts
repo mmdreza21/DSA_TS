@@ -161,6 +161,19 @@ export class Graph {
     return path;
   }
 
+  public hasCycle(label: string) {
+    const visited = new Set<GraphNode>();
+    const previous = new Set<GraphNode>();
+
+
+    for (const element of ) {
+      
+    }
+
+      if (previous.has(root))  
+      
+  }
+
   *[Symbol.iterator](): IterableIterator<GraphNode> {
     for (const node of this.nodes.values()) {
       yield node;
