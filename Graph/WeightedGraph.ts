@@ -1,5 +1,6 @@
 import PriorityQueue from "priorityqueuejs";
 import { Stack } from "../Stack/Stack.ts";
+import { connect } from "node:net";
 
 class GraphNode {
   label: string;
@@ -13,7 +14,7 @@ class GraphNode {
     this.edges.add(new Edge(this, to, weight));
   }
 
-  get gteEdges() {
+  get getEdges() {
     return this.edges;
   }
 }
@@ -47,7 +48,7 @@ class Path {
   }
 }
 
-export class Graph {
+export class WeightedGraph {
   private nodes: Map<string, GraphNode> = new Map();
 
   public addNode(label: string) {
@@ -89,7 +90,7 @@ export class Graph {
       const current = queue.deq().node;
       visited.add(current);
 
-      for (const edge of current.gteEdges) {
+      for (const edge of current.getEdges) {
         if (visited.has(edge.to)) continue;
         const newDistent = distance.get(current)! + edge.weight;
         if (newDistent < distance.get(edge.to)!) {
@@ -126,7 +127,7 @@ export class Graph {
       const current = queue.deq().node;
       visited.add(current);
 
-      for (const edge of current.gteEdges) {
+      for (const edge of current.getEdges) {
         if (visited.has(edge.to)) continue;
         const newDistent = distance.get(current)! + edge.weight;
         if (newDistent < distance.get(edge.to)!) {
@@ -161,17 +162,113 @@ export class Graph {
     return path;
   }
 
-  public hasCycle(label: string) {
+  public hasCycle(label: string): boolean {
     const visited = new Set<GraphNode>();
     const previous = new Set<GraphNode>();
 
+    const detectCycle = (root: GraphNode): boolean => {
+      for (const neighbor of this.nodes.get(label)?.getEdges!) {
+        if (previous.has(neighbor.to)) continue;
+        previous.add(neighbor.from);
 
-    for (const element of ) {
-      
+        if (visited.has(neighbor.from)) return true;
+        visited.add(neighbor.from);
+
+        detectCycle(neighbor.to);
+      }
+      console.log(previous);
+      console.log(visited);
+      return false;
+    };
+    return detectCycle(this.nodes.get(label)!);
+  }
+
+  public hasCycleMosh(label: string): boolean {
+    // Keeps track of visited nodes during DFS
+    const visited = new Set<GraphNode>();
+
+    const detectCycle = (
+      node: GraphNode,
+      visited: Set<GraphNode>,
+      parent?: GraphNode
+    ): boolean => {
+      // Mark current node as visited
+      visited.add(node);
+
+      // Explore all edges from this node
+      for (const edge of node.getEdges) {
+        // Skip the edge leading back to the parent node
+        if (edge.to === parent) continue;
+
+        // Case 1: Destination node is already visited -> cycle detected
+        // Case 2: Destination node not visited -> recursively check deeper
+        if (visited.has(edge.to) || detectCycle(edge.to, visited, node))
+          return true;
+      }
+      // No cycle found from this path
+      return false;
+    };
+
+    // Run DFS from all unvisited nodes (to cover disconnected graphs)
+    for (const node of this.nodes.values()) {
+      if (!visited.has(node) && detectCycle(node, visited)) return true; // Found a cycle
     }
 
-      if (previous.has(root))  
-      
+    // No cycles detected in the graph
+    return false;
+  }
+
+  // prim's algorithm
+  public getMinimumSpanningTree(): WeightedGraph {
+    // Create a new graph to store the minimum spanning tree (MST)
+    const tree = new WeightedGraph();
+
+    if (this.nodes.size === 0) return tree;
+    // Create a priority queue to always get the edge with minimum weight
+    // The priority queue is initialized with a function that uses edge weight for comparison
+    const edges = new PriorityQueue<Edge>((a) => a.weight);
+
+    // Get the first node from the graph to start building the MST
+    // (Prim's algorithm can start with any node)
+    const [startNode] = this.nodes.values();
+
+    // Add all edges connected to the starting node to the priority queue
+    for (const edge of startNode.getEdges) edges.enq(edge);
+
+    // Add the starting node to the MST
+    tree.addNode(startNode.label);
+
+    // If there are no edges (graph has only one node), return the empty tree
+    if (edges.isEmpty()) return tree;
+
+    // Continue until all nodes are included in the MST
+    while (tree.nodes.size < this.nodes.size) {
+      // Get the edge with minimum weight from the priority queue
+      const minEdge = edges.deq();
+      const nextNode = minEdge.to;
+
+      // If the node is already in the MST, skip this edge (to avoid cycles)
+      if (tree.containsNode(nextNode.label)) continue;
+
+      // Add the new node to the MST
+      tree.addNode(nextNode.label);
+      // Add the edge connecting it to the MST
+      tree.addEdge(minEdge.from.label, nextNode.label, minEdge.weight);
+
+      // Add all edges from this new node to the priority queue,
+      // but only if they lead to nodes not already in the MST
+      for (const edge of nextNode.getEdges) {
+        if (!tree.containsNode(edge.to.label)) {
+          edges.enq(edge);
+        }
+      }
+    }
+
+    return tree;
+  }
+
+  public containsNode(label: string): boolean {
+    return this.nodes.has(label);
   }
 
   *[Symbol.iterator](): IterableIterator<GraphNode> {
@@ -183,7 +280,7 @@ export class Graph {
   // Iterator for edges in the graph (returns [from, to] pairs)
   *edges(): IterableIterator<string> {
     for (const node of this.nodes.values()) {
-      for (const edge of node.gteEdges.values()) {
+      for (const edge of node.getEdges.values()) {
         yield `${edge.from.label} -> ${edge.to.label}: ${edge.weight}`;
       }
     }
