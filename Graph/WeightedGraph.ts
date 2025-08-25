@@ -69,7 +69,7 @@ export class WeightedGraph {
   public getShortestDistance(from: string, to: string): number {
     const fromNode = this.nodes.get(from);
     const toNode = this.nodes.get(to);
-    if (!fromNode || !toNode) throw new Error("hah");
+    if (!fromNode || !toNode) throw new Error("404 From or To node not found.");
 
     const distance = new Map<GraphNode, number>();
     // Initialize distances to all nodes as infinity
@@ -77,15 +77,13 @@ export class WeightedGraph {
       distance.set(node, Number.MAX_VALUE);
     distance.set(fromNode, 0); //starting node
 
-    const visited = new Set<GraphNode>();
     // Priority queue to hold nodes to explore, sorted by distance
     const queue = new PriorityQueue<NodeEntry>(
       (a, b) => b.priority - a.priority // Min-heap comparison
     );
     queue.enq(new NodeEntry(fromNode, 0)); // Start with the source node
 
-    const previousNodes = new Map<GraphNode, GraphNode>();
-
+    const visited = new Set<GraphNode>();
     while (!queue.isEmpty()) {
       const current = queue.deq().node;
       visited.add(current);
@@ -146,7 +144,8 @@ export class WeightedGraph {
     toNode: GraphNode,
     previousNodes: Map<GraphNode, GraphNode>
   ): Path {
-    const stack = new Stack<GraphNode>(42);
+    const maxStackSize = 42; //just to avoid infinite loop in case of cycle
+    const stack = new Stack<GraphNode>(maxStackSize);
     stack.push(toNode);
     let previous = previousNodes.get(toNode);
     while (previous) {
@@ -183,7 +182,7 @@ export class WeightedGraph {
     return detectCycle(this.nodes.get(label)!);
   }
 
-  public hasCycleMosh(label: string): boolean {
+  public hasCycleMosh(): boolean {
     // Keeps track of visited nodes during DFS
     const visited = new Set<GraphNode>();
 
