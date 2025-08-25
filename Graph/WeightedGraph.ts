@@ -131,7 +131,7 @@ export class WeightedGraph {
         if (newDistent < distance.get(edge.to)!) {
           previousNodes.set(edge.to, current);
           distance.set(edge.to, newDistent);
-          // now we haw new distance, so we add it to the queue
+          // now we have new distance, so we add it to the queue
           queue.enq(new NodeEntry(edge.to, newDistent));
         }
       }
