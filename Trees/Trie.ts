@@ -150,44 +150,42 @@ export class Trie {
     return total;
   }
 
-  public static longestCommonPrefix(words: string[]) {
-    const trie = new Trie();
-    for (const word of words) {
-      trie.insert(word);
-    }
-
-    let prefix = "";
-    const maxChar = this.findShortest(words).length;
-    let current = trie.root;
-
-    while (prefix.length < maxChar) {
-      const children = current.getChildren();
-      if (children.length != 1) break;
-
-      current = children[0];
-      prefix += current.value;
-    }
-    return prefix;
-  }
-
+  /**
+   * Finds the longest common prefix among a list of words using a Trie.
+   *
+   * @param words - An array of strings to find the common prefix for.
+   * @returns The longest common prefix shared by all words.
+   */
   public static longestCommonPrefix2(words: string[]) {
+    // Create a new Trie structure to store all words
     const trie = new Trie();
+
+    // Insert each word into the Trie
     for (const word of words) {
       trie.insert(word);
     }
 
+    // This will store the final prefix result
     let prefix = "";
+    // The longest possible common prefix cannot be longer than the shortest word
     const maxLen = this.findShortest(words).length;
+    // Start traversal from the root of the Trie
     let current = trie.root;
 
+    // Traverse down the Trie while:
+    // 1. The prefix length is less than the shortest word
+    // 2. The current node has exactly one child (meaning no branching so far)
     while (prefix.length < maxLen) {
       const children = current.getChildren();
+      // If there are no children or more than one child, stop (prefix ends here)
       if (children.length != 1) break;
-
+      // Move to the only child node
       current = children[0];
+      // Append the child's character to the prefix
       prefix += current.value;
     }
 
+    // Return the longest common prefix found
     return prefix;
   }
 
