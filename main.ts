@@ -1,7 +1,7 @@
 // main.ts
 import readline from "readline";
 
-import { WeightedGraph } from "./Graph/WeightedGraph.ts";
+import { WeightedGraph } from "./Data_Structure/Graph/WeightedGraph.ts";
 
 const rl = readline.createInterface({
   input: process.stdin,
