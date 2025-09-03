@@ -9,9 +9,11 @@ const rl = readline.createInterface({
 
 class Main {
   constructor() {
-    const sort = Sort.BobbleSort([8, 3, 4, 1, 2]);
+    const sort = new Sort();
+    sort.BobbleSort([8, 3, 4, 1, 2, 3]);
+    sort.selectionSort([8, 3, 4, 1, 2, 3]);
 
-    console.log(sort);
+    console.log(sort.selectionSort([8, 3, 4, 1, 2, 3]));
   }
 }
 
