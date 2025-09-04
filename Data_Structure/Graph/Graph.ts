@@ -134,7 +134,6 @@ export class Graph {
   }
 
   public topologicalSortMosh(label: string) {
-    const root = this.nodes.get(label);
     const stack = new Stack<string>(12);
     const visited = new Set<GraphNode>();
 
@@ -189,9 +188,7 @@ export class Graph {
     // Check all components of the graph
     while (unvisited.size > 0) {
       const [startNode] = unvisited;
-      if (detectCycle(startNode)) {
-        return true;
-      }
+      if (detectCycle(startNode)) return true;
     }
 
     return false;

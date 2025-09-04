@@ -24,7 +24,8 @@ class TrieNode {
   }
 
   public hasChildren(): boolean {
-    return !this.children.values.length;
+    return this.children.size > 0;
+    // return !this.children.values().next().done;
   }
 
   public removeChild(ch: string): void {
