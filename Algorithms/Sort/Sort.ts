@@ -23,6 +23,61 @@ export class Sort {
     return array;
   }
 
+  public insertionSort(array: number[]) {
+    for (let i = 1; i < array.length; i++) {
+      const current = array[i];
+      let j = i - 1;
+      while (j >= 0 && array[j] > current) {
+        array[j + 1] = array[j];
+        j--;
+      }
+      array[j + 1] = current;
+    }
+    return array;
+  }
+
+  public mergeSort(arr: number[]): number[] {
+    // Base case: if array has 0 or 1 element, it’s already sorted
+    if (arr.length <= 1) return arr;
+
+    // Step 1: Split array into 2 halves
+    const mid = Math.floor(arr.length / 2);
+    const left = arr.slice(0, mid); // first half
+    const right = arr.slice(mid); // second half
+
+    // Step 2: Recursively sort both halves
+    const sortedLeft = this.mergeSort(left);
+    const sortedRight = this.mergeSort(right);
+
+    // Step 3: Merge the sorted halves
+    this.merge(sortedLeft, sortedRight, arr);
+    return arr;
+  }
+  private merge(left: number[], right: number[], result: number[]): void {
+    let i = 0,
+      j = 0,
+      k = 0;
+
+    // Compare elements from left and right, pick smaller
+    while (i < left.length && j < right.length) {
+      if (left[i] <= right[j]) {
+        result[k++] = left[i++];
+      } else {
+        result[k++] = right[j++];
+      }
+    }
+
+    // Copy remaining elements from left (if any)
+    while (i < left.length) {
+      result[k++] = left[i++];
+    }
+
+    // Copy remaining elements from right (if any)
+    while (j < right.length) {
+      result[k++] = right[j++];
+    }
+  }
+
   private findMinIndex(array: number[], i: number) {
     let minIndex: number = i;
     for (let j = i; j < array.length; j++)

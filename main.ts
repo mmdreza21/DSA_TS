@@ -1,11 +1,5 @@
 // main.ts
-import readline from "readline";
 import { Sort } from "./Algorithms/Sort/Sort.ts";
-
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-});
 
 class Main {
   constructor() {
@@ -14,6 +8,7 @@ class Main {
     sort.selectionSort([8, 3, 4, 1, 2, 3]);
 
     console.log(sort.selectionSort([8, 3, 4, 1, 2, 3]));
+    console.log("inser  ", sort.mergeSort([8, 3, 4, 1, 2, 3]));
   }
 }
 

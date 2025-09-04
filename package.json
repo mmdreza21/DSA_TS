@@ -4,7 +4,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "start": "export NODE_NO_WARNINGS=1;  nodemon  main.ts"
+    "start": "export NODE_NO_WARNINGS=1;  nodemon  main.ts",
+    "startw": " nodemon  main.ts"
   },
   "keywords": [],
   "author": "",
@@ -12,7 +13,8 @@
   "description": "",
   "devDependencies": {
     "@types/node": "^22.14.0",
-    "typescript": "^5.8.3"
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
   },
   "dependencies": {
     "@types/priorityqueuejs": "^1.0.4",
