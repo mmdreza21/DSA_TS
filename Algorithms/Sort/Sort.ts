@@ -53,6 +53,7 @@ export class Sort {
     this.merge(sortedLeft, sortedRight, arr);
     return arr;
   }
+
   private merge(left: number[], right: number[], result: number[]): void {
     let i = 0,
       j = 0,
@@ -76,6 +77,16 @@ export class Sort {
     while (j < right.length) {
       result[k++] = right[j++];
     }
+  }
+  public quickSort(array: number[]) {
+    //partition
+    //sort left
+    //sort right
+  }
+
+  private partition(array: number[]): number {
+    const pivot = array[array.length - 1];
+    const boundary = -1;
   }
 
   private findMinIndex(array: number[], i: number) {
