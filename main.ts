@@ -8,7 +8,7 @@ class Main {
     sort.selectionSort([8, 3, 4, 1, 2, 3]);
 
     console.log(sort.selectionSort([8, 3, 4, 1, 2, 3]));
-    console.log("inser  ", sort.mergeSort([8, 3, 4, 1, 2, 3]));
+    console.log("count  ", sort.countingSort([5, 2, 5, 3, 2, 4]));
   }
 }
 

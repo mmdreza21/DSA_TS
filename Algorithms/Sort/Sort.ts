@@ -78,18 +78,60 @@ export class Sort {
       result[k++] = right[j++];
     }
   }
+
   public quickSort(array: number[]) {
-    //partition
-    //sort left
-    //sort right
+    const quickSort = (array: number[], start: number, end: number) => {
+      if (start >= end) return;
+
+      //partition
+      const boundary = this.partition(array, start, end);
+      //sort left
+      quickSort(array, start, boundary - 1);
+      //sort right
+      quickSort(array, boundary + 1, end);
+    };
+    quickSort(array, 0, array.length - 1);
+  }
+  // The int that we are returning is the index of
+  // the pivot after it has moved to its correct position.
+  private partition(array: number[], start: number, end: number): number {
+    const pivot = array[end];
+    let boundary = start - 1;
+
+    for (let i = start; i <= end; i++) {
+      if (array[i] <= pivot) this.swap(array, i, ++boundary);
+    }
+    return boundary;
   }
 
-  private partition(array: number[]): number {
-    const pivot = array[array.length - 1];
-    const boundary = -1;
+  public countingSort(array: number[]) {
+    const countArr: number[] = new Array(Math.max(...array) + 1).fill(0);
+
+    for (let i = 0; i < array.length; i++) {
+      countArr[array[i]]++;
+    }
+    console.log(countArr);
+    let k = 0;
+    for (let i = 0; i < countArr.length; i++) {
+      if (countArr[i]) {
+        for (let count = 0; count < countArr[i]; count++) {
+          array[k++] = i;
+        }
+      }
+    }
+    return array;
   }
+
+  public bucketSort(array: Array<number>) {}
 
   private findMinIndex(array: number[], i: number) {
+    let minIndex: number = i;
+    for (let j = i; j < array.length; j++)
+      if (array[j] < array[minIndex]) minIndex = j;
+    return minIndex;
+  }
+
+  private findMaxIndex(array: number[], i: number) {
     let minIndex: number = i;
     for (let j = i; j < array.length; j++)
       if (array[j] < array[minIndex]) minIndex = j;
