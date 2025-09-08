@@ -1,80 +1,67 @@
-# Data Structures & Algorithms Practice (TypeScript)
+# 📚 Data Structures and Algorithms in TypeScript
 
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
-![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white)
-![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)
 
-A TypeScript implementation of common data structures and algorithms for learning and practice purposes.
 
-## Table of Contents
-- [Features](#features)
-- [Data Structures](#data-structures)
-- [Algorithms](#algorithms)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+This repository contains my practice and implementations of **Data Structures and Algorithms (DSA)** using **TypeScript**.  
+It is organized into well-structured folders such as **Arrays, Stacks, Queues, Linked Lists, Trees, Graphs, Hash Tables, Heaps, Recursion, and more**.
 
-## Features
-- Clean, well-documented TypeScript implementations
-- Type-safe data structures and algorithms
-- Comprehensive test coverage
-- Educational comments and explanations
-- Follows best practices and modern JavaScript/TypeScript standards
+---
 
-## Data Structures
+## 🚀 Features
 
-### Linear Structures
-- [x] Array
-- [x] Linked List (Singly, Doubly)
-- [x] Stack
-- [x] Queue (Standard, Priority, Circular)
-- [x] Hash Table
+- Implementations of popular **data structures**:
+  - Array
+  - Linked List
+  - Stack
+  - Queue
+  - Trees (Binary Tree, AVL Tree, Trie, Heap, Priority Queue)
+  - Graph
+  - Hash Tables
 
-### Tree Structures
-- [x] Binary Tree
-- [x] Binary Search Tree (BST)
-- [x] AVL Tree
-- [x] Heap (Min, Max)
-- [x] Trie
+- Implementations of **algorithms**:
+  - Search Algorithms
+  - Sorting Algorithms
+  - String Manipulation
 
-### Graph Structures
-- [x] Graph (Adjacency List, Adjacency Matrix)
-- [x] Directed/Undirected Graph
+- Each implementation is written in **TypeScript** for type safety.
 
-## Algorithms
+### 📁 Folder Structure
 
-### Sorting
-- [x] Bubble Sort
-- [x] Selection Sort
-- [x] Insertion Sort
-- [x] Merge Sort
-- [x] Quick Sort
-- [x] Heap Sort
+```
+Algorithms/
+│├── Search/
+│├── Sort/
+│├── String_Manipulation/
 
-### Searching
-- [x] Linear Search
-- [x] Binary Search
-- [x] Depth-First Search (DFS)
-- [x] Breadth-First Search (BFS)
+DSA-TypeScript/
+│├── arrays/
+│├── linked-lists/
+│├── stacks/
+│├── queues/
+│├── trees/
+│├── graphs/
+│├── hash-tables/
+│├── heaps/
+│├── recursion/
+│├── sorting/
+│├── searching/
+│└── string-manipulation/
 
-### Graph Algorithms
-- [x] Dijkstra's Algorithm
-- [x] Bellman-Ford Algorithm
-- [x] Floyd-Warshall Algorithm
-- [x] Prim's Algorithm
-- [x] Kruskal's Algorithm
-- [x] Topological Sort
+``` 
+- Each folder contains relevant implementations and examples.
 
-### Other Algorithms
-- [x] Dynamic Programming Examples
-- [x] Recursion Examples
-- [x] Backtracking Examples
+## Usage
+You can use the implementations in this repository as a reference or directly in your TypeScript projects. Each implementation includes example usage to help you understand how to utilize the data structures and algorithms effectively.
+Explore the folders for specific data structures or algorithms.
 
-## Installation
+Modify main.ts to test different implementations.
 
-1. Clone the repository:
-```bash
-git clone https://github.com/your-username/data-structures-algorithms-ts.git
-cd data-structures-algorithms-ts
+Great for interview preparation or improving problem-solving skills.
+
+
+
+
+
+
+
