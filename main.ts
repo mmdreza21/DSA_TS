@@ -1,14 +1,13 @@
 // main.ts
+import { log } from "console";
+import { Search } from "./Algorithms/search/Search.ts";
 import { Sort } from "./Algorithms/Sort/Sort.ts";
 
 class Main {
   constructor() {
-    const sort = new Sort();
-    sort.BobbleSort([8, 3, 4, 1, 2, 3]);
-    sort.selectionSort([8, 3, 4, 1, 2, 3]);
-
-    console.log(sort.selectionSort([8, 3, 4, 1, 2, 3]));
-    console.log("bucket", sort.bucketSort([5, 2, 5, 3, 2, 4], 3));
+    const search = new Search();
+    const item = search.linearSearch([1, 2, 3, 4, 5, 6, 7, 8], 2);
+    console.log(item);
   }
 }
 
