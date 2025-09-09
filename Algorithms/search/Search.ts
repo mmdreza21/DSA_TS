@@ -39,8 +39,49 @@ export class Search {
     }
     return -1;
   }
-
   private findMiddle(left: number, right: number) {
     return Math.floor((left + right) / 2);
+  }
+
+  public ternarySearch(array: number[], target: number) {
+    const ternarySearch = (
+      array: number[],
+      target: number,
+      left: number,
+      right: number
+    ) => {
+      if (left > right) return -1;
+
+      let partitionSize = Math.floor((right - left) / 3);
+      let mid1 = left + partitionSize;
+      let mid2 = right - partitionSize;
+      if (array[mid1] === target) return mid1;
+      if (array[mid2] === target) return mid2;
+
+      if (target < array[mid1])
+        return ternarySearch(array, target, left, mid1 - 1);
+
+      if (target > array[mid1])
+        return ternarySearch(array, target, mid2 + 1, right);
+
+      return ternarySearch(array, target, mid1 + 1, mid2 - 1);
+    };
+    return ternarySearch(array, target, 0, array.length - 1);
+  }
+
+  public jumpSearch(array: number[], target: number) {
+    const blockSize = Math.floor(Math.sqrt(array.length));
+    let start: number = 0;
+    let next: number = blockSize;
+    console.log(next);
+
+    while (start < array.length && array[next - 1] < target) {
+      start = next;
+      next += blockSize;
+      if (next > array.length) next = array.length;
+    }
+    for (let i = start; i < next; i++) if (array[i] == target) return i;
+
+    return -1;
   }
 }

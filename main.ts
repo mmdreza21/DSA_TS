@@ -6,7 +6,7 @@ import { Sort } from "./Algorithms/Sort/Sort.ts";
 class Main {
   constructor() {
     const search = new Search();
-    const item = search.binarySearch([1, 2, 3, 4, 5, 6, 7, 8], 11);
+    const item = search.jumpSearch([1, 2, 3, 4, 5, 6, 7, 8], 4);
     console.log(item);
   }
 }
