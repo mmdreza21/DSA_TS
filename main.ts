@@ -5,7 +5,7 @@ import { StringManipulation } from "./Algorithms/String_Manipulation/StringManip
 class Main {
   constructor() {
     const sm = new StringManipulation();
-    const item = sm.findNumberOfVowels("hello mamad");
+    const item = sm.mostRepeatedCharacter("helloooo");
     console.log(item);
   }
 }
