@@ -1,12 +1,11 @@
 // main.ts
-import { log } from "console";
-import { Search } from "./Algorithms/search/Search.ts";
-import { Sort } from "./Algorithms/Sort/Sort.ts";
+
+import { StringManipulation } from "./Algorithms/String_Manipulation/StringManipulation.ts";
 
 class Main {
   constructor() {
-    const search = new Search();
-    const item = search.jumpSearch([1, 2, 3, 4, 5, 6, 7, 8], 4);
+    const sm = new StringManipulation();
+    const item = sm.findNumberOfVowels("hello mamad");
     console.log(item);
   }
 }

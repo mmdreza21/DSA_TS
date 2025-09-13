@@ -5,25 +5,21 @@ export class Search {
     return -1;
   }
 
-  public binarySearchR(array: number[], target: number) {
-    const binarySearch = (
-      array: number[],
-      target: number,
-      left: number,
-      right: number
-    ): number => {
-      const mid = this.findMiddle(left, right);
+  public binarySearchR(
+    array: number[],
+    target: number,
+    left: number = 0,
+    right: number = array.length - 1
+  ): number {
+    const mid = this.findMiddle(left, right);
 
-      if (right < left) return -1;
+    if (right < left) return -1;
 
-      if (array[mid] === target) return mid;
-      if (target < array[mid])
-        return binarySearch(array, target, left, mid - 1);
+    if (array[mid] === target) return mid;
+    if (target < array[mid])
+      return this.binarySearchR(array, target, left, mid - 1);
 
-      return binarySearch(array, target, mid + 1, right);
-    };
-
-    return binarySearch(array, target, 0, array.length - 1);
+    return this.binarySearchR(array, target, mid + 1, right);
   }
 
   public binarySearch(array: number[], target: number) {
@@ -83,5 +79,13 @@ export class Search {
     for (let i = start; i < next; i++) if (array[i] == target) return i;
 
     return -1;
+  }
+
+  exponentialSearch(array: number[], target: number) {
+    let bound = 1;
+    while (bound < array.length && array[bound] < target) bound *= 2;
+    let left = Math.floor(bound / 2);
+    let right = Math.min(bound, array.length - 1);
+    return this.binarySearchR(array, target, left, right);
   }
 }
