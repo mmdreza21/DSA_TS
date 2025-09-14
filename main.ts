@@ -5,7 +5,7 @@ import { StringManipulation } from "./Algorithms/String_Manipulation/StringManip
 class Main {
   constructor() {
     const sm = new StringManipulation();
-    const item = sm.mostRepeatedCharacter("helloooo");
+    const item = sm.detectAnagramSort("abcd", "adbc");
     console.log(item);
   }
 }

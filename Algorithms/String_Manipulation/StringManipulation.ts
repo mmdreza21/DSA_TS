@@ -97,4 +97,43 @@ export class StringManipulation {
     }
     return maxChar;
   }
+
+  public capitalize(str: string) {
+    const words = str.trim().split(" ");
+    // let caped = "";
+    for (let i = 0; i < words.length; i++) {
+      words[i] =
+        words[i].substring(0, 1).toUpperCase() +
+        words[i].substring(1).toLocaleLowerCase();
+    }
+
+    return words.join(" ");
+  }
+
+  //A string is an anagram of another string if it has the exact same characters in any order.
+  public detectAnagramMine(str1: string, str2: string): boolean {
+    if (str1.length !== str2.length) return false;
+
+    for (const ch of str1) {
+      if (!str2.includes(ch)) return false;
+    }
+
+    return true;
+  }
+
+  public detectAnagramSort(str1: string, str2: string): boolean {
+    if (str1 === null || str2 === null || str1.length !== str2.length)
+      return false;
+    return str1.split("").sort().join("") === str2.split("").sort().join("");
+  }
+
+  public detectAnagramHistogram(str1: string, str2: string): boolean {
+    if (str1.length !== str2.length) return false;
+
+    for (const ch of str1) {
+      if (!str2.includes(ch)) return false;
+    }
+
+    return true;
+  }
 }
