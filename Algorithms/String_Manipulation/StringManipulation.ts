@@ -113,9 +113,9 @@ export class StringManipulation {
   //A string is an anagram of another string if it has the exact same characters in any order.
   public detectAnagramMine(str1: string, str2: string): boolean {
     if (str1.length !== str2.length) return false;
-
+    //O(N^2)
     for (const ch of str1) {
-      if (!str2.includes(ch)) return false;
+      if (!str2.includes(ch)) return false; //o(n)
     }
 
     return true;
@@ -127,11 +127,43 @@ export class StringManipulation {
     return str1.split("").sort().join("") === str2.split("").sort().join("");
   }
 
+  // O(N)
   public detectAnagramHistogram(str1: string, str2: string): boolean {
     if (str1.length !== str2.length) return false;
 
-    for (const ch of str1) {
-      if (!str2.includes(ch)) return false;
+    const ALPHABET_SIZE = 26;
+    const frequencies: number[] = new Array(ALPHABET_SIZE).fill(0);
+
+    // Convert to lowercase to handle case-insensitive comparison
+    str1 = str1.toLowerCase();
+    str2 = str2.toLowerCase();
+
+    // Count characters in str1
+    for (let i = 0; i < str1.length; i++) {
+      frequencies[str1.charCodeAt(i) - 97]++;
+    }
+
+    // Subtract counts based on str2
+    for (let i = 0; i < str2.length; i++) {
+      let index = str2.charCodeAt(i) - 97;
+      if (frequencies[index] === 0) return false;
+      frequencies[index]--;
+    }
+
+    // If all frequencies are zero, they are anagrams
+    // return frequencies.every((count) => count === 0);
+    return true;
+  }
+
+  public isPalindrome(str: string) {
+    // reverse works but its small
+    let left = 0;
+    let right = str.length - 1;
+
+    while (left < right) {
+      if (str.charAt(left) !== str.charAt(right)) return false;
+      left++;
+      right--;
     }
 
     return true;

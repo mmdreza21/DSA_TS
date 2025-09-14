@@ -5,7 +5,7 @@ import { StringManipulation } from "./Algorithms/String_Manipulation/StringManip
 class Main {
   constructor() {
     const sm = new StringManipulation();
-    const item = sm.detectAnagramSort("abcd", "adbc");
+    const item = sm.isPalindrome("smsms");
     console.log(item);
   }
 }
