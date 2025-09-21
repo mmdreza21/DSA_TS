@@ -155,6 +155,14 @@ export class StringManipulation {
     return true;
   }
 
+  /**
+   * Checks if a given string is a palindrome.
+   * A palindrome is a string that reads the same forward and backward
+   * (e.g., "madam", "racecar", "level").
+   *
+   * @param str - The string to check
+   * @returns true if the string is a palindrome, false otherwise
+   */
   public isPalindrome(str: string) {
     // reverse works but its small
     let left = 0;

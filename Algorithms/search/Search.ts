@@ -35,6 +35,7 @@ export class Search {
     }
     return -1;
   }
+
   private findMiddle(left: number, right: number) {
     return Math.floor((left + right) / 2);
   }
@@ -69,14 +70,13 @@ export class Search {
     const blockSize = Math.floor(Math.sqrt(array.length));
     let start: number = 0;
     let next: number = blockSize;
-    console.log(next);
 
     while (start < array.length && array[next - 1] < target) {
       start = next;
       next += blockSize;
       if (next > array.length) next = array.length;
     }
-    for (let i = start; i < next; i++) if (array[i] == target) return i;
+    for (let i = start; i < next; i++) if (array[i] == target) return i; //leaner search
 
     return -1;
   }
