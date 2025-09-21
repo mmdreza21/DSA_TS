@@ -23,6 +23,13 @@ export class Sort {
     return array;
   }
 
+  private findMinIndex(array: number[], i: number) {
+    let minIndex: number = i;
+    for (let j = i; j < array.length; j++)
+      if (array[j] < array[minIndex]) minIndex = j;
+    return minIndex;
+  }
+
   public insertionSort(array: number[]) {
     for (let i = 1; i < array.length; i++) {
       const current = array[i];
@@ -185,13 +192,6 @@ export class Sort {
     }
 
     return array;
-  }
-
-  private findMinIndex(array: number[], i: number) {
-    let minIndex: number = i;
-    for (let j = i; j < array.length; j++)
-      if (array[j] < array[minIndex]) minIndex = j;
-    return minIndex;
   }
 
   private findMaxIndex(array: number[], i: number) {
