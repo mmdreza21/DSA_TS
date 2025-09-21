@@ -28,7 +28,6 @@ export class Graph {
     if (!toNode) throw new Error("to node is ENotFund.");
 
     this.adjacencyList.get(fromNode)!.add(toNode);
-    console.log(this.adjacencyList);
     //if we want non directive graph we add next line too
     // this.adjacencyList.get(toNode)!.push(fromNode);
   }
@@ -64,7 +63,7 @@ export class Graph {
     const visited = new Set<GraphNode>();
 
     while (!stack.isEmpty()) {
-      const current = stack.pop(); //A
+      const current = stack.pop();
       if (visited.has(current!)) continue;
       console.log(current?.label);
       visited.add(current!);
@@ -95,8 +94,9 @@ export class Graph {
     const node = this.nodes.get(label);
     if (!node) return;
 
+    const qSize = this.nodes.size;
     const visited = new Set<GraphNode>();
-    const queue = new Queue<GraphNode>(10);
+    const queue = new Queue<GraphNode>(qSize);
     queue.enqueue(node);
 
     while (!queue.isEmpty()) {
@@ -115,7 +115,8 @@ export class Graph {
   public topologicalSort(label: string) {
     const root = this.nodes.get(label);
 
-    const stack = new Stack(12);
+    const stackSize = this.nodes.size;
+    const stack = new Stack(stackSize);
 
     const topologicalSort = (root: GraphNode, visited: Set<GraphNode>) => {
       visited.add(root);
@@ -134,7 +135,8 @@ export class Graph {
   }
 
   public topologicalSortMosh(label: string) {
-    const stack = new Stack<string>(12);
+    const stackSize = this.nodes.size;
+    const stack = new Stack<string>(stackSize);
     const visited = new Set<GraphNode>();
 
     const topologicalSort = (
@@ -147,7 +149,6 @@ export class Graph {
 
       for (const n of this.adjacencyList.get(node)!)
         topologicalSort(n, visited, stack);
-
       stack.push(node.label);
     };
 
